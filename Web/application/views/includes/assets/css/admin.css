@@ -1,0 +1,132 @@
+.calendar_edit input {
+    margin: 0px 0px 20px;
+}
+ .calendar_edit.meal input, .calendar_edit.meal select {
+    margin: 0px 0px 20px;
+}
+.text-center {
+    text-align: center;
+}
+.right-border {
+    border-right: 1px dotted #ff0000;
+}
+.left-border {
+    border-left: 1px dotted #ff0000;
+}
+ul.inline-checkbox {
+    list-style: none;
+    margin: 0;
+}
+.profile_view img{
+    width: 100px;
+    height: 100px;
+}
+.flash.error{
+    background-color: #E20010;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 5px;
+}
+.flash.success {
+    background-color: #5BB237;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+#Show .show-detail {
+    background-color: rgba(0, 0, 0, 0.09);
+    border-radius: 3px;
+    display: inline-block;
+    padding: 20px;
+    border-bottom: 5px solid rgba(0, 0, 0, 0.09);
+    width: 100%;
+}
+#Show .show-detail h3 {
+    color: #666;
+    font-weight: 700;
+    margin: 0 0 12px;
+    line-height: 1;
+    text-align: center;
+}
+#Show .show-detail span.type-info {
+    border-bottom: 1px dashed #fff;
+    float: left;
+    margin: 10px 0 0;
+    padding: 0 0 10px;
+    color: #666;
+    min-height: 30px;
+    width: 100%;
+    font-weight: 700;
+}
+#Show .show-detail span.user-infor {
+    border-bottom: 1px dashed #fff;
+    float: left;
+    margin: 10px 0 0;
+    padding: 0 0 10px;
+    color: #666;
+    min-height: 30px;
+    width: 100%;
+
+}
+.fc-content.evt_detail{
+    position: relative;
+}
+.fc-activity-detail:before, .fc-activity-detail:after {
+    position: absolute;
+    right: -13px;
+    top: 65px;
+    content: "";
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 14px #ddd solid;
+    width: 0;
+    height: 0;
+    transform:rotate(180deg);
+}
+.fc-activity-detail:after {
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 13px solid #fff;
+    top: 67px;
+    right: -12px;
+}
+.fc-activity-detail {
+    border: 1px #ddd solid;
+    width: 160px;
+    padding: 10px;
+    position: absolute;
+    margin: 20px 0;
+    right: 110%;
+    bottom: -52px;
+    display: none;
+    z-index: 9;
+    background-color: #fff;
+}
+.fc-content.evt_detail:hover .fc-activity-detail{
+    display: block;
+}
+.fc-activity-title {
+    background-color: rgba(0,0,0,0.08);
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    text-indent: 10px;
+    color: #333;
+    font-weight: 700;
+}
+table .fc-row.fc-rigid, .fc-event-container .fc-day-grid-event .fc-content{
+    overflow: visible;
+}
+.fc-activity-detail span {
+    color: #333;
+    display: inline-block;
+    margin: 5px 0 0;
+}
+.fc-event div.fc-content{
+    position: initial;
+}
+.ui-datepicker {
+  z-index: 999 !important;
+}

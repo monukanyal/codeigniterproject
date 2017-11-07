@@ -1,0 +1,39 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Subscription extends CI_Controller {
+
+	function __construct() 
+   	{
+	    parent::__construct(); 	   
+		
+		$this->load->library('session');
+	    $this->load->model('auth_model');               
+	    $this->load->model('user_model');
+	   // $this->check_isvalidated();
+		// if(in_array($current_method,$auth_user_method))
+		// {
+		//     if (isset($this->session->userdata['logged_in']))
+		// 		redirect(site_url('dashboard'));				
+		// }	  
+   	}
+	public function index()
+	{
+	
+		// echo site_url();
+		$data["title"] = "Home";
+		$data["assets_path"] = base_url().$this->config->item('assets_path');
+		// $this->load->view('includes/partials/admin/header',$data);
+		$this->load->view('home/subscription',$data);
+		$remember = $this->input->post('remember_me');
+
+		if($remember){
+		$this->session->set_userdata('remember_me', true);
+		}
+
+		// $this->load->view('includes/partials/admin/footer',$data);
+	}
+	
+}
+
+?>

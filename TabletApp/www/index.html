@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<!-- CSP support mode (required for Windows Universal apps): https://docs.angularjs.org/api/ng/directive/ngCsp -->
+<html lang="en" ng-app="app" ng-csp>
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <!-- JS dependencies (order matters!) -->
+    <script src="scripts/platformOverrides.js"></script>
+    
+    <!-- include the css and sprite -->
+    <link rel="stylesheet" href="css/chosen.min.css">
+    <link rel="image_src" href="img/chosen-sprite.png">
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/onsen/js/onsenui.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/chosen.min.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+    <!-- Cordova reference -->
+    <script src="cordova.js"></script>
+    <script src="js/index.js"></script>
+    
+    <!-- // <script src="js/kendo.all.min.js"></script> -->
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+    <!-- CSS dependencies -->
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css" />
+    <!-- CSP support mode (required for Windows Universal apps) -->
+    <link rel="stylesheet" href="lib/angular/angular-csp.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/select.css" />
+
+    <!--App init -->
+    <script src="js/app.js"></script>
+    <script src='js/checklist-model.js'></script>
+
+    <!-- include angular-chosen -->
+    <script src="js/angular-chosen.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+
+    <title>Community</title>
+</head>
+
+<body ng-controller="CommunityController">
+
+    <!-- Loading app -->
+    <ons-modal var="modal">
+        <ons-icon icon="ion-load-c" spin="true"></ons-icon>
+    </ons-modal>
+
+
+    <ons-navigator var="comm">
+    <ons-page class="login" ng-controller="loginController">
+      <ons-toolbar>
+        <div class="center">Community Scheduling</div>
+        <!-- <div class="right"><ons-toolbar-button>Close</ons-toolbar-button></div> -->
+      </ons-toolbar>
+      <div class="login-form">
+      <form name="login-form" ng-submit="login_user(user)">
+      <span class="errormsg">{{errorMsg}}</span><br/><br/><br/>   
+        <input type="text" name="username" class="text-input--underbar" placeholder="Email" value="" ng-model="user.email">
+        <input type="password" name="password" class="text-input--underbar" placeholder="Password" value="" ng-model="user.password">
+        <br><br>
+       <!--  <ons-button modifier="large" class="login-button" ng-click="login_user(user)">Log In</ons-button> -->
+       <button  type="submit" class="button button--cta submit-button" value="Log In">Log In</button>
+        <br><br>
+        <!-- <ons-button modifier="quiet" class="forgot-password">Forgot password?</ons-button> -->
+      </form>
+      </div>
+      <div class="comm_logo"><img src='img/comm_logo.png'/></div>
+    </ons-page>
+    </ons-navigator>
+
+    <ons-template id="home.html">
+        <ons-page ng-controller="PlanHomeController" class="homepage">
+            <ons-row>
+                <ons-col>
+                    <div class="main-heading"><div class="heading">Welcome to Community Scheduling App</div>
+                    <!--<div class="heading-tag">community safety programme for rural areas with an emphasis on older and vulernable people</div>
+                    </div>-->
+                </ons-col>
+            </ons-row>
+
+            <ons-row class="row-center">
+                <ons-col>
+                    <div class="one-fourth">
+                        <span onclick="comm.pushPage('plan_activity.html')"><span class="img"><img src="img/Plan-Activity.png"></span></span>
+                        <span onclick="comm.pushPage('plan_activity.html')">Plan Activity</span>
+                    </div>
+                </ons-col>
+                <ons-col>
+                    <div class="one-fourth">
+                        <span onclick="comm.pushPage('manage_activity.html')"><span class="img"><img src="img/Manage-Activity.png"></span></span>
+                        <span onclick="comm.pushPage('manage_activity.html')">Manage Activity</span>
+                    </div>
+                </ons-col>
+                <ons-col>
+                    <div class="one-fourth">
+                        <span onclick="comm.pushPage('manage_meal.html')"><span class="img"><img src="img/Manage-Meal.png"></span></span>
+                        <span onclick="comm.pushPage('manage_meal.html')">Manage Meal</span>
+                    </div>
+                </ons-col>
+                <ons-col>
+                    <div class="one-fourth">
+                        <span onclick="comm.pushPage('sendnotify.html')"><span class="img"><img src="img/Plan-Meal.png"></span></span>
+                        <span onclick="comm.pushPage('sendnotify.html')">Send Notification</span>
+                    </div>
+                </ons-col>
+            </ons-row>
+            <ons-row>
+                <div class="footer">
+                <span class="img"><img src="img/logo.png"></span>
+                </div>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+
+    <ons-template id="plan_activity.html">
+        <ons-page ng-controller="PlanActivityController">
+            <ons-toolbar>
+                <div class="left">
+                    <ons-back-button></ons-back-button>
+                </div>
+                <div class="center">Plan an Activity</div>
+                <div class="right">
+                <ons-toolbar-button onclick="comm.pushPage('home.html')"><ons-icon icon="ion-home" size="24px"></ons-icon></ons-toolbar-button>
+            </div>
+            </ons-toolbar><br/><br/>
+
+            <ons-row>
+                <ons-col>
+                <form name="form" role="form" class="planevent-form">
+                    <span class="message">{{message}}</span><br/><br/><br/>
+                            <div class="form-group select_activity">
+                            <span class="label">Name : </span>
+                               <!--  <span class="form-input"><input type="text" class="text-input" name="event_name" ng-model="activity.name" placeholder="" value="" required></span> -->
+                               <div class="select">
+                               <select name="event_name" ng-options="listevent.name for listevent in listevents track by listevent.id" ng-model="activity.listevent" required><option value="">-- Select Activity --</option> 
+                               </select>
+                               </div>
+                            </div>
+                            <div class="form-group">
+                                <span class="label">Description : </span>
+                                <span class="form-textarea"><textarea class="textarea" rows="3" col="5" ng-model="activity.listevent.description" placeholder="" value="">{{activity.listevent.description}}</textarea></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="activity-fields">
+                                <div class="act_left">
+                                    <span class="label">Meetup location : </span>
+                                    <span class="form-input select select_location">
+                                    <select name="meetup_location" ng-options="location.name for location in locations track by location.id" name="meetup_loc" ng-model="activity.location" required><option value="">-- Select Location --</option> 
+                                    </select>
+                                    </span>&nbsp;&nbsp;
+                                </div>
+                                <div class="act_right">
+                                    <span class="label geoff-event">Maximum Attendies : </span>
+                                    <span class="form-input"><input type="text" class="text-input" ng-model="activity.listevent.max_attendies" placeholder="" value="{{activity.listevent.max_attendies}}"></span>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <span class="errmsg">{{errMessage}}</span>
+                                <div class="activity-fields">
+                                    <div class="start_date">
+                                     <span class="label">Start Date : </span>
+                                     <span class="form-input form_box"><input type="date" class="text-input" placeholder="" name="meetup_date" ng-model="startdate" value="" ng-change='checkErr(startdate,enddate)' required></span>
+                                    </div>
+                                    <div class="no_enddate"><span class="form_checkbox"><input type="checkbox" ng-value="false" name="no_end_date" ng-model="activity_nodate" ng-click="ShowHide_date()">No End Date</span>
+                                    </div>
+                                    <div class="end_date" ng-hide="IsVisible"><span class="label geoff-event">End Date : </span>
+                                    <span class="form-input form_box"><input type="date" class="text-input" name="end_date" ng-model="enddate" placeholder="" value="" ng-change='checkErr(startdate,enddate)'></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="activity-fields">
+                                <div class="act_left">
+                                    <span class="label">Start Time : </span>
+                                    <span class="form-input"><input type="time" class="text-input" name="start_time" placeholder="HH:mm:ss" ng-model="activity.starttime" min="01:00:00" ng-change='checkTime(activity.starttime,activity.endtime)' required></span>&nbsp;&nbsp;
+                                </div>
+                                <div class="act_right">
+                                    <span class="label geoff-event">End Time : </span>
+                                    <span class="form-input"><input type="time" class="text-input" name="end_time" ng-model="activity.endtime" placeholder="HH:mm:ss" min="01:00:00" ng-change='checkTime(activity.starttime,activity.endtime)' required></span>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <span class="label">Recurring Event : </span>
+                                <span class="form-checkbox" ng-repeat="option in options">
+                                <label class="checkbox">
+                                  <input type="checkbox" ng-model="option.value">
+                                  <div class="checkbox__checkmark"></div>
+                                  {{option.Id}}
+                                </label>&nbsp;&nbsp;
+                                </span>
+                            </div>
+                            <div class="save-button">
+                            <button type="submit" class="button" ng-click="saveEvent(activity);">Save</button>
+                            </div>
+                    </form>
+                </ons-col>
+            </ons-row>
+            <br/><br/>
+        </ons-page>
+    </ons-template>
+
+     <ons-template id="manage_activity.html">
+        <ons-page ng-controller="ManageActivityController">
+            <ons-toolbar>
+                <div class="left">
+                    <ons-back-button></ons-back-button>
+                </div>
+                <div class="center">Manage Activity</div>
+                <div class="right">
+                <ons-toolbar-button onclick="comm.pushPage('home.html')"><ons-icon icon="ion-home" size="24px"></ons-icon></ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-row  class="manage_tab_view">
+                <ons-col>
+                    <div class="left_section">
+                        <span class="search-filter" ng-show="showSearch">
+                        <div class="search_img"><img src="img/search.png"  /></div>
+                        <input type="text" id="query" ng-model="query" placeholder="Search"/>
+                        </span>
+
+                        <ons-list>
+                         <ons-list-item  ng-if="listEventUsers == ''">Please select activity to see signed up users</ons-list-item>
+                         <ons-list-item ng-repeat="listuser in listEventUsers | filter:query | orderBy: orderList" ng-if="listEventUsers[0].status !='Error'">
+                           <label class="checkbox checkbox--list-item">
+                           <input type="checkbox" name="attendusers" checklist-model="selectedUsers" checklist-value="listuser.id" ng-click="check_users()" ng-checked="selectusers.indexOf(listuser.id) > -1">
+                           <div class="checkbox__checkmark checkbox--list-item__checkmark"></div>
+                            {{listuser.first_name}}&nbsp;&nbsp;{{listuser.last_name}}
+                            </label>
+                         </ons-list-item>
+                         <ons-list-item ng-if="listEventUsers[0].status =='Error'">No user signed up for this activity</ons-list-item>
+                        </ons-list>
+                        <!-- <div class="list-save" ng-show="showSearch">
+                            <button class="button button--outline">Save</button>
+                        </div> -->
+                    </div>
+                    <div class="left-bottom"><img src="img/logo.png"></div>
+                </ons-col>
+                <ons-col>
+                     <div class="right-section">
+                        <div class="activity-area">
+                          <form name="form" role="form" class="manageactivity_form">
+                          <span class="message">{{message}}</span><br><br>
+                            <div class="form-group select">
+                                <span class="label">Activities : </span>
+                                <select name="event_name" ng-if="alltodayEvents.status !='Error'" ng-options="listevent.event_name+','+listevent.location+' '+listevent.meetup_time+' - '+listevent.end_time+' '+listevent.event_date for listevent in listevents track by listevent.id" ng-model="manageact.event_name" ng-change="getselectval(manageact.event_name)">
+                                <option label=" Select Activity " value=""> Select Activity </option>
+                                </select>
+                                <select name="event_name" ng-if="alltodayEvents.status == 'Error'"><option label=" No Activity for today " value=""> {{errMessage}} </option></select>
+                            </div>
+                            <div class="form-group select">
+                                <span class="label">Add Additional: </span>
+                                <select name="user_name" options="listusers" ng-options="listuser as listuser.name for listuser in listusers track by listuser.id" ng-change="getuserval(manageact.manage_user)" ng-model="manageact.manage_user">
+                                <option value="">-- Select User--</option>
+                                </select>
+                            </div>
+                            <input type="hidden" ng-model="manageact.eventId" value="{{EventId}}"/> 
+                            <div class="save-button"><button class="button" ng-show="addUser && addActivity" ng-click="adduser(manageact)">Add</button></div>
+                          </form>
+                        </div>
+                     </div>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+
+    <ons-template id="manage_meal.html">
+        <ons-page ng-controller="ManageMealController">
+
+            <ons-toolbar>
+                <div class="left">
+                <ons-back-button></ons-back-button>
+                </div>
+                <div class="center">Manage Meal</div>
+                <div class="right">
+                <ons-toolbar-button onclick="comm.pushPage('home.html')"><ons-icon icon="ion-home" size="24px"></ons-icon></ons-toolbar-button>
+               </div>
+            </ons-toolbar>
+                <ons-row class="manage_tab_view">
+                <ons-col>
+                   <div class="left_section">
+                        <span class="search-filter" ng-show="showSearchmeal">
+                        <div class="search_img"><img src="img/search.png"  /></div>
+                        <input type="text" id="query" ng-model="query" placeholder="Search"/>
+                        </span>
+                        <ons-list>
+                         <ons-list-item  ng-if="listMealUsers == ''">Please select meal to see signed up users</ons-list-item>
+                        
+                         <ons-list-item modifier="tappable" ng-repeat="listuser in listMealUsers | filter:query | orderBy: orderList" ng-if="listMealUsers[0].status !='Error'">
+                         <label class="checkbox checkbox--list-item">
+                         <input type="checkbox" name="attendusers" checklist-model="selectedUsers" checklist-value="listuser.id" ng-click="check_users()" ng-checked="selectusers.indexOf(listuser.id) > -1">
+                         <div class="checkbox__checkmark checkbox--list-item__checkmark"></div>
+                         {{listuser.first_name}}&nbsp;&nbsp;{{listuser.last_name}}
+                         </label>
+                         </ons-list-item>
+                         <ons-list-item ng-if="listMealUsers[0].status =='Error'"> No user signed up for this activity</ons-list-item>
+                        </ons-list>
+                       <!--  <div class="list-save" ng-show="showSearchmeal">
+                            <button class="button button--outline">Save</button>
+                        </div> -->
+                    </div>
+                    <div class="left-bottom"><img src="img/logo.png"></div>
+                </ons-col>
+                <ons-col>
+                    <div class="right-section">
+                         <div class="activity-area">
+                         <form name="form" role="form" class="managemeal_form">
+                            <span class="message">{{message}}</span><br><br>
+                            <div class="form-group select">
+                                <span class="label">Meal: </span>
+                                <select name="event_name" ng-options="listmeal.name+', '+listmeal.location_name+' '+listmeal.start_time+' - '+listmeal.end_time+' '+listmeal.start_date for listmeal in listmeals track by listmeal.id" ng-model="managemeal.meal" ng-if="alltodayMeals.status != 'Error'" class="meallist" ng-change="getselectval(managemeal.meal)">
+                                <option label=" Select Meal " value=""> Select Meal </option>
+                                </select>
+                                <select name="event_name" ng-if="alltodayMeals.status == 'Error'"><option label=" No Meal for today " value=""> {{errMessage}} </option></select>
+                            </div>
+                            <div class="form-group select">
+                                <span class="label">Add Additional: </span>
+                                <select name="user_name" options="listusers" on-change="doStuff" ng-options="listuser as listuser.name for listuser in listusers track by listuser.id" ng-change="getmealuser(managemeal.manage_user)" ng-model="managemeal.manage_user">
+                                <option value="">-- Select User--</option>
+                                </select>
+                            </div>
+                            <div class="save-button"><button class="button" ng-show="addUser && addMeal" ng-click="adduser(managemeal)">Add</button></div><br/>
+                          </form>
+                        </div>
+                    </div>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+
+<!--     <ons-split-view var="app.splitView" secondary-page="sendnotify.html" main-page="notify1.html" main-page-width="70%" collapse="width 500px">
+</ons-split-view> -->
+
+    <ons-template id="sendnotify.html">
+        <ons-page ng-controller="SendNotifyController">
+            <ons-toolbar>
+                <div class="left">
+                    <ons-back-button></ons-back-button>
+                </div>
+                <div class="center">Send Notification</div>
+                <div class="right">
+                <ons-toolbar-button onclick="comm.pushPage('home.html')"><ons-icon icon="ion-home" size="24px"></ons-icon></ons-toolbar-button></div>
+            </ons-toolbar><br/><br/>
+
+
+                <ons-row>
+                <ons-col class="notification-items">
+                    <form>
+                        <button class="button button--large--cta sec-button" ng-click="send_users_notify()">Send Notification to independent users</button>
+                        <br>
+                        <button class="button button--large--cta sec-button" ng-click="send_activity_notify()">Send Notification to signed up users for an activity</button>
+                        <br>
+                        <button class="button button--large--cta sec-button" ng-click="send_allusers()">Send Emergency Notification to all users </button><br>
+                    </form>
+                </ons-col>
+                </ons-row>
+            </ons-page>
+    </ons-template>
+
+    <ons-template id="notify1.html">
+     <ons-page ng-controller="SendNotifyController">
+        <ons-toolbar>
+            <div class="left">
+                <ons-back-button></ons-back-button>
+            </div>
+            <div class="center">Send Notification to independent users</div>
+            <div class="right">
+            <ons-toolbar-button onclick="comm.pushPage('home.html')"><ons-icon icon="ion-home" size="24px"></ons-icon></ons-toolbar-button></div>
+        </ons-toolbar><br/><br/>
+        <ons-row class="send_row">
+        <ons-col class="usernotify">
+        <ons-list ng-repeat="listuser in listusers">
+            <ons-list-item ng-click="users_notification(listuser.id)">{{listuser.name}}</ons-list-item>
+            <!-- <ons-list-item ng-click="toggleModal()" class="btn btn-default">{{listuser.name}}</ons-list-item> -->
+        </ons-list>
+        </ons-col>
+        </ons-row>
+    </ons-page>
+    </ons-template>
+
+    <ons-template id="notify2.html">
+     <ons-page ng-controller="SendNotifyController">
+        <ons-toolbar>
+            <div class="left">
+                <ons-back-button></ons-back-button>
+            </div>
+            <div class="center">Send Notification to signed up users</div>
+            <div class="right">
+            <ons-toolbar-button onclick="comm.pushPage('home.html')"><ons-icon icon="ion-home" size="24px"></ons-icon></ons-toolbar-button></div>
+        </ons-toolbar><br/><br/>
+        <ons-row class="send_row">
+        <ons-col class="usernotify">
+        <ons-list ng-repeat="listevent in listevents">
+               <ons-list-item ng-click="activity_notification(listevent.id)">{{listevent.event_name}}</ons-list-item>
+        </ons-list>
+        </ons-col>
+        </ons-row>
+    </ons-page>
+    </ons-template>
+
+    <ons-template id="notify3.html">
+     <ons-page ng-controller="SendNotifyController">
+        <ons-toolbar>
+            <div class="left">
+                <ons-back-button></ons-back-button>
+            </div>
+            <div class="center">Send Notification to all users</div>
+            <div class="right">
+            <ons-toolbar-button onclick="comm.pushPage('home.html')"><ons-icon icon="ion-home" size="24px"></ons-icon></ons-toolbar-button></div>
+        </ons-toolbar><br/><br/>
+        <ons-row class="send_row">
+        <ons-col class="usernotify">
+        <ons-list ng-repeat="listuser in listusers">
+               <ons-list-item ng-click="allusers_notification({{listuser.id}})">{{listuser.name}}{{listuser.id}}</ons-list-item>
+        </ons-list>
+        </ons-col>
+        </ons-row>
+    </ons-page>
+    </ons-template>
+
+    <ons-template id="sendmsg1.html">
+    <ons-page ng-controller="SendNotifyController">
+      <ons-toolbar>
+        <div class="left">
+            <ons-back-button></ons-back-button>
+        </div>
+        <div class="center">Send Message</div>
+        <div class="right close">
+        <ons-toolbar-button onclick="comm.popPage('notify3.html');">Cancel</ons-toolbar-button></div>
+        </ons-toolbar><br/><br/>
+        <form role="form" class="send-msg">
+          <div class="form-group">
+            <textarea class="textarea textarea--transparent"  ng-model='message.text' rows="4" cols="50" placeholder="Message"></textarea>
+          </div>
+          <ons-button modifier="large" ng-click="send_msg1(message)" class="button button--cta">Submit</ons-button>
+        </form>
+      </ons-page>
+    </ons-template>
+
+    <ons-template id="sendmsg2.html">
+        <ons-page ng-controller="SendNotifyController">
+      <ons-toolbar>
+        <div class="left">
+            <ons-back-button></ons-back-button>
+        </div>
+        <div class="center">Send Message</div>
+        <div class="right close">
+        <ons-toolbar-button onclick="comm.popPage('notify3.html')">Cancel</ons-toolbar-button></div>
+        </ons-toolbar><br/><br/>
+        <form role="form" class="send-msg">
+          <div class="form-group">
+            <textarea class="textarea textarea--transparent"  ng-model='message.text' rows="4" cols="50" placeholder="Message"></textarea>
+          </div>
+          <ons-button modifier="large" ng-click="send_msg2(message)" class="button button--cta">Submit</ons-button>
+        </form>
+      </ons-page>
+    </ons-template>
+
+    <ons-template id="sendmsg3.html">
+        <ons-page ng-controller="SendNotifyController">
+      <ons-toolbar>
+        <div class="left">
+            <ons-back-button></ons-back-button>
+        </div>
+        <div class="center">Send Message</div>
+        <div class="right close">
+        <ons-toolbar-button onclick="comm.popPage('notify3.html');">Cancel</ons-toolbar-button></div>
+        </ons-toolbar><br/><br/>
+        <form role="form" class="send-msg">
+          <div class="form-group">
+            <textarea class="textarea textarea--transparent"  ng-model='message.text' rows="4" cols="50" placeholder="Message"></textarea>
+          </div>
+          <ons-button modifier="large" ng-click="send_msg3(message)" class="button button--cta">Submit</ons-button>
+        </form>
+      </ons-page>
+    </ons-template>
+
+
+
+
+</body>
+</html>

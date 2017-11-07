@@ -1,0 +1,1323 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+ @font-face{
+    font-family:'dosis-regular';
+    font-style:normal;
+    font-weight:400;
+    src:url('../fonts/dosis-regular.eot');
+    src:url('../fonts/dosis-regular.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/dosis-regular.woff') format('woff'),
+    url('../fonts/dosis-regular.ttf') format('truetype'),
+    url('../fonts/dosis-regular.svg#dosisregular') format('svg');
+}
+ @font-face{
+    font-family:'dosis-bold';
+    font-style:normal;
+    font-weight:400;
+    src:url('../fonts/dosis-bold.eot');
+    src:url('../fonts/dosis-bold.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/dosis-bold.woff') format('woff'),
+    url('../fonts/dosis-bold.ttf') format('truetype'),
+    url('../fonts/dosis-bold.svg#dosisregular') format('svg');
+}
+ @font-face{
+    font-family:'dosis-semibold';
+    font-style:normal;
+    font-weight:400;
+    src:url('../fonts/dosis-semibold.eot');
+    src:url('../fonts/dosis-semibold.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/dosis-semibold.woff') format('woff'),
+    url('../fonts/dosis-semibold.ttf') format('truetype'),
+    url('../fonts/dosis-semibold.svg#dosisregular') format('svg');
+}
+
+body
+{
+    overflow: hidden;
+}
+.homepage .page__background
+{
+    background-color : #3D8EB9 !important;
+    color: #fff;
+}
+
+.item {
+    padding: 10px;
+    line-height: 1;
+}
+
+.item-thum {
+    background-color: #ccc;
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+}
+
+.item-title {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.item-desc {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.3;
+    margin: 4px 0 0 0;
+    padding: 0 30px 0 0;
+}
+
+.item-label {
+    font-size: 12px;
+    color: #999;
+    float: right;
+}
+.main-heading
+{
+    width:100%;
+    padding: 100px 0 45px;
+    color: #fff;
+}
+.heading {
+    font-family: dosis-semibold;
+    font-size: 49px;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.heading-tag
+{
+    width:100%;
+    text-align: center;
+}
+.login-form {
+  text-align: center;
+  width: 80%;
+  margin: 60px auto 0;
+}
+
+.login-form  input[type=email], .login-form input[type=text],.login-form input[type=password] {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  outline: none;
+  height: 100%;
+  padding-top:30px;
+  padding-bottom: 10px;
+  color:#fff;
+}
+.text-input--underbar:invalid
+{
+    color:#fff;
+}
+.login-button {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.forgot-password {
+  display: block;
+  margin: 8px auto 0 auto;
+  font-size: 14px;
+}
+
+.login .page__background {
+    background-attachment: scroll !important;
+    background-clip: border-box !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+    background-image: url("../img/i-pad-Screen.png") !important;
+    background-origin: padding-box !important;
+    background-position: 0 0 !important;
+    background-repeat: no-repeat !important;
+    background-size: cover;
+    float: left;
+    height: 100%;
+    width: 100%;
+}
+
+.comm_logo {
+    text-align: center;
+    width: 100%;
+}
+.comm_logo img
+{
+    width: 20%;
+}
+.navigation-bar{
+    background: #232323;
+    height: 54px;
+}
+.navigation-bar__title{
+    color: #fff;
+    line-height: 52px;
+    height: 52px;
+}
+.left .button--cta{
+    margin: 3px 10px 0;
+}
+.navigation-bar__left {
+  float: left;
+  max-width: 50%;
+  text-align: left;
+  width: 27%;
+}
+.navigation-bar .center {
+  float: left;
+  font-family: "dosis-semibold";
+  font-size: 22px;
+  text-align: center;
+}
+.plan_event_form
+{
+    margin: 0 20px;
+}
+.row-center {
+    margin-bottom: 75px;
+    text-align: center;
+}
+.form-group
+{
+    width:100%;
+    float:left;
+    padding-bottom:30px;
+}
+.form-group .label {
+    float: left;
+    width: 15%;
+    font-size:19px;
+    font-family: 'dosis-regular';
+}
+.form-input {
+    float: left;
+    width: 21%;
+}
+.form-textarea
+{
+    float: left;
+    width: 60%;
+}
+.form-group .form-input  input {
+    float: left;
+    width: 100%;
+}
+.form-group textarea {
+    float: left;
+    width:100%;
+    padding: 10px;
+}
+.save-button
+{
+    float: left;
+    text-align: center;
+    width: 46%;
+}
+form {
+    margin: 20px;
+    width: 94%;
+    float: left;
+}
+.checkbox
+{
+    margin: 0;
+}
+.left_section
+{
+    background: none repeat scroll 0 0 #3d8eb9;
+    float: left;
+    height: 600px;
+    width: 100%;
+    padding-top:30px;
+}
+.left_section ons-list
+{
+    border-top: 0 none !important;
+}
+.left-bottom
+{
+    background: none repeat scroll 0 0 #3689b5;
+    -webkit-box-shadow: inset 0 20px 20px -20px #3382AB;
+    -moz-box-shadow: inset 0 20px 20px -20px #3382AB;
+    box-shadow: inset 0 20px 20px -20px #3382AB;
+    float: left;
+    height: auto;
+    padding: 45px 0;
+    text-align: center;
+    width: 100%;
+}
+.left-bottom img
+{
+    width:120px;
+}
+.one-fourth {
+    background: none repeat scroll 0 0 #fff;
+    color: #000;
+    height: 180px;
+    margin: 0 auto;
+    padding: 0 30px;
+    width: 100px;
+}
+.one-fourth .img
+{
+    float: left;
+    height: 85px;
+    padding-top: 40px;
+    width: 100%;
+}
+.one-fourth a
+{
+    color: #000;
+    cursor: pointer;
+    float: left;
+    font-family: dosis-regular;
+    text-decoration: none;
+    width: 100%;
+}
+.one-fourth .img img
+{
+    width: 80px;
+}
+ons-list {
+    background: none repeat scroll 0 0 #3d8eb9 !important;
+    color: #fff;
+}
+ons-list-item {
+    color: #fff !important;
+    font-family:'dosis-regular';
+}
+.right-section
+{
+    width: 97%;
+    float: left;
+}
+.activity-area {
+    margin: 0 auto;
+    padding: 15% 0;
+    width: 95%;
+}
+.manageactivity_form .form-group .label,.managemeal_form .form-group .label
+{
+    padding: 10px 0;
+    width: 30%;
+}
+.manageactivity_form .form-input,.managemeal_form .form-input {
+    float: left;
+    width: 50%;
+}
+
+.ion-ios-arrow-back, [icon="ion-home"] {
+    background: none repeat scroll 0 0 #3d8eb9 !important;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 29px !important;
+    line-height: 36px !important;
+    margin-top: 7px;
+    max-height: 36px;
+    min-width: 40px;
+    text-align: center;
+    vertical-align: top;
+}
+.back-button__label {
+    margin-left: -32px !important;
+}
+.footer
+{
+    margin: 100px auto 0;
+    text-align: center;
+    width: 400px;
+}
+.footer .img img
+{
+    width:170px;
+}
+.login-form {
+    margin: 40% auto 10%;
+    width: 80%;
+}
+
+.login-form .form-group {
+    margin: 0 auto;
+    padding-bottom: 30px;
+    width: 100%;
+}
+.errormsg
+{
+    color:red;
+}
+.message
+{
+    color:green;
+    width:100%;
+}
+.text-input
+{
+    width:50%;
+}
+.submit-button
+{
+    width:50%;
+}
+
+/****** geoff-plan-event-fieldcss-2 april ******/
+
+.start_date {
+    float: left;
+    width: 44%;
+}
+.start_date .label
+{
+    float: left;
+    width: 47%;
+}
+.start_date .form-input
+{
+    float: left;
+    width: 57%;
+}
+.start_date .form-input input {
+    float: left;
+    width: 100%;
+}
+.no_enddate {
+    float: left;
+    width: 13%;
+    font-family: "dosis-regular";
+    font-size: 19px;
+}
+.end_date {
+    width: 90%;
+}
+.end_date .label
+{
+     width: 40% !important;
+}
+.end_date .form-input
+{
+    width:59%;
+}
+.errmsg
+{
+    color:red;
+}
+.notification-items .radio-button--list-item 
+{
+    color: #000000;
+    font-size: 18px;
+    height: 100%;
+    line-height: 26px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    float:left;
+}
+.notification-items form
+{
+    float: left;
+    height: auto;
+    margin-top: 15%;
+}
+.ng-scope.ons-icon.ons-icon--ion.ion-close {
+    color: #fff !important;
+}
+.close span{
+    color: #fff;
+    line-height:50px;
+}
+
+.notification-items span {
+    color: #000;
+    float: left;
+    margin-top: 7px;
+}
+.select_option
+{
+   float: left;
+   width: 25%;
+}
+.notification-items .list__item
+{
+    float: left;
+    height: auto;
+    padding: 10px;
+    width: 100%;
+}
+.notification-items .list__item label
+{
+    float: left;
+    width: 60%;
+}
+.notification-items .list__item .radio-button__checkmark
+{
+    float: left;
+    margin-right: 10px;
+}
+.notification-items .button
+{
+    width:80%;
+    margin: 0 auto;
+    line-height: 55px;
+}
+.send_notification
+{
+    width:100%;
+    text-align :center;
+    margin-top:50px;
+    float: left;
+}
+
+/*********** 13 april ***********/
+.send_row.row {
+    flex: unset;
+    margin: 0 auto;
+    width: 50%;
+}
+
+.usernotify.col.ons-col-inner {
+  flex: unset;
+  margin: 0 auto;
+  width: 100% !important;
+}
+.usernotify ons-list {
+    background: #25a6d9 none repeat scroll 0 0 !important;
+    color: #000000 !important;
+    margin-bottom: 10px;
+    padding: 0 !important;
+}
+.usernotify ons-list-item {
+    text-align: center;
+    padding: 0 !important;
+    line-height: 55px;
+}
+
+
+
+
+
+/********* 14 april **********/
+
+.formarea {
+  width: 50%;
+  margin: 50px auto 0px auto;
+}
+.textarea {
+    border: 1px solid #ddd !important;
+}
+
+/********** 16 April ************/
+
+
+
+.left_section ons-list {
+    border: 0 none !important;
+    float: left;
+    width: 100%;
+}
+
+
+.left_section ons-list-item {
+    line-height: 26px;
+    padding: 3px 12px;
+}
+.search-filter {
+    color: #fff;
+    float: left;
+    font-family: dosis-regular;
+    padding: 0 12px 20px;
+    position: relative;
+    width: 89%;
+}
+
+/************ april 20 ******/
+
+.left_section label.checkbox--list-item .checkbox__checkmark::before {
+  height: 30px;
+  width: 30px;
+}
+.left_section label.checkbox--list-item .checkbox__checkmark::after {
+  top: 10px;
+  width: 17px;
+}
+label.checkbox--list-item .checkbox__checkmark {
+  height: 30px;
+  margin-right: 7px;
+  margin-top: 7px;
+  width: 30px;
+}
+
+/********************/
+
+.search_img {
+    left: 18px;
+    position: absolute;
+    top: 9px;
+}
+.search_img img
+{
+    float: left;
+    padding-right: 10px;
+    padding-top: 1px;
+    width: 20px;
+}
+.search-filter input
+{
+    border: 0 none;
+    border-radius: 43px;
+    color: #000;
+    float: left;
+    margin-top: 3px;
+    padding: 8px 0 10px 28px;
+    width: 87%;
+}
+.left_section .checkbox > .checkbox__checkmark::before
+{
+    border:1px solid #fff;
+}
+.left_section .checkbox > input[type="checkbox"]:checked + .checkbox__checkmark::before
+{
+    background:none;
+    border:1px solid #ffffff;
+}
+
+.list-save .button.button--outline {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 18px;
+    cursor: pointer;
+    margin-left: 15px;
+    margin-top: 20px;
+    padding: 0;
+    width: 100px;
+}
+/*.select_activity .ng-pristine {
+  background-color: #f9f9f9;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  padding: 10px 6px;
+  width: 216px;
+}
+.select_location .ng-pristine {
+  background-color: #f9f9f9;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  padding: 10px 6px;
+  width: 207px;
+}*/
+select {
+  font-size: 15px;
+  padding: 10px 5px;
+}
+.form-input .text-input.ng-pristine.ng-invalid.ng-invalid-required.ng-touched {
+   width: 205px;
+}
+.act_right .text-input {
+  height: 38px;
+}
+.form_box .text-input {
+  height: 38px;
+}
+.act_left .text-input {
+  height: 38px;
+}
+ .select select {
+ background-color: #f9f9f9;
+ background-image: url("../img/down-arrow.png");
+ background-position: right 15px;
+ background-repeat: no-repeat;
+ background-size: 15px auto;
+ border: 1px solid #ddd;
+ border-radius: 5px;
+ padding: 10px 6px;
+ width: auto;
+-webkit-appearance: none;
+-moz-appearance:    none;
+appearance:         none;
+}
+/*********** 18 april *******/
+
+.send-msg
+{
+    float: none;
+    margin: 10% auto;
+    width: 80%;
+}
+
+
+
+/*********21-Apr**********/
+
+.manage_tab_view .save-button {
+  padding-left: 30%;
+  width: auto;
+}
+
+
+
+
+
+
+
+/*.manage_tab_view .left-bottom {
+  bottom: 0;
+  display: inline-block;
+  float: none;
+  height: auto;
+  left: 0;
+  position: absolute;
+  vertical-align: bottom;
+}
+.manage_tab_view.row.ons-row-inner {
+  display: table;
+  height: 100%;
+}
+.manage_tab_view ons-col.ons-col-inner:first-child {
+  background: #3d8eb9 none repeat scroll 0 0;
+  max-width: 100% !important;
+  position: relative;
+  width: 35% !important;
+}*/
+.manage_tab_view .form-group.select select {
+  color: #1f1f21;
+  float: right;
+  font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+  padding-right: 28px;
+  width: 70%;
+}
+/*.manage_tab_view ons-col.ons-col-inner {
+  height: 100%;
+}
+.manage_tab_view .left_section {
+  display: inline-block;
+  float: none;
+  height: auto;
+  max-height: none;
+  min-height: auto;
+  vertical-align: top;
+}
+.manage_tab_view ons-col.ons-col-inner {
+  display: table-cell;
+  flex: inherit !important;
+  height: 100%;
+  vertical-align: top;
+  width: 65%;
+}*/
+
+/***********css 27-04-2016 ************/
+
+.chosen-container-single .chosen-search input[type="text"]
+{
+    color:#000;
+}
+.chosen-container {
+    /*padding:10px 0;*/
+    width:70% !important;
+}
+.chosen-single span{
+    font-size: 15px;
+}
+
+.chosen-single {
+  background-color: #f9f9f9 !important;
+  background-image: url("../img/down-arrow.png") !important;
+  background-position: right 15px !important;
+  background-repeat: no-repeat !important;
+  background-size: 15px auto !important;
+  border: 1px solid #ddd !important;
+  border-radius: 5px !important;
+  box-shadow: none !important;
+  float: right;
+  line-height:20px !important;
+  height: auto !important;
+  padding: 10px 6px !important;
+  width: 100% !important;
+-webkit-appearance: none;
+-moz-appearance:    none;
+appearance:         none;
+}
+
+
+/****** css-2 May 2016 *******/
+
+
+.chosen-single.chosen-default > span {
+    color: #1f1f21;
+}
+
+/********** css- 3 May 2016 *********/
+
+
+.select_location select {
+    width:200px;
+}
+.activity-fields .select_location select {
+    width:100%;
+}
+
+/******** css- May 4 ******/
+
+.form-group .form-checkbox{
+    padding:7px 0;
+    float:left;
+}
+
+
+/** media quiry for responsive **/
+
+@media (max-width: 1280px) {
+
+.left_section{
+      min-height: 1035px;
+      height: auto;
+    }
+.chosen-container.chosen-with-drop .chosen-drop {
+  left: 0;
+  margin-left: 132px;
+  margin-top: 10px;
+}
+
+}
+
+@media (max-width: 1024px) and (min-width: 768px){
+    body
+    {
+        overflow: hidden;
+    }
+    .main-heading{
+        padding: 110px 0 85px;
+    }
+    .heading{
+        font-size: 39px;
+    }
+    .heading-tag{
+        font-size: 16.5px;
+    }
+    .login-form {
+        margin:10% auto 0;
+        width: 80%;
+    }
+    .one-fourth{
+        width: 130px;
+        padding: 0 15px;
+    }
+    .footer{
+        margin-top: 45px;
+    }
+    /* Manage activity */
+    .left_section{
+        max-height: 700px;
+        min-height:800px;
+        height:auto;
+    }
+    .left-bottom{
+        height: auto;
+    }
+    /* plan meal */
+    .geoff-form{
+        margin: 20px 0;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+    .form-group .label{
+        width: 18%;
+        padding:4px 0;
+    }
+
+    .start_date {
+        float: left;
+        width: 50%;
+    }
+    .start_date .label {
+        float: left;
+        width: 36% !important;
+    }
+    .form-textarea,
+    .geoff-fields{
+        width: 75%;
+        float: left;
+    }
+    .save-button{
+        width: auto;
+        padding-left: 20%;
+    }
+    .geoff-fields .label.meal-closing-time{
+        width: 25%;
+        text-align: right;
+    }
+    .form-input{
+        width: 57%;
+    }
+    .geoff-fields .form-input{
+        width: 36.5%;
+    }
+    .geoff-fields .form-input input{
+        width: 100%;
+    }
+    .geoff-fields .form-input:last-child{
+        float: right;
+    }
+    .geoff-fields .label.geoff-event{
+        width: 30%;
+        text-align: right;
+    }
+    .geoff-plan-event-field .form-input{
+        width: 34%;
+    }
+
+    /********* 15 april ******/
+
+.act_left {
+ float: left;
+ width: 50%;
+}
+.act_right {
+ float: right;
+ width: 50%;
+}
+.act_left .label {
+ width: 36%;
+}
+.act_right .label.geoff-event {
+ width: 43%;
+}
+.act_right .text-input.ng-pristine.ng-valid.ng-touched {
+ width: 204px;
+}
+.end_date .text-input.ng-pristine.ng-valid.ng-touched {
+ width: 173px;
+
+}.text-input.ng-pristine.ng-valid.ng-valid-required.ng-touched {
+ width: 141px;
+ margin-left: 5px;
+}
+.no_enddate {
+ float: left;
+ font-family: "dosis-regular";
+ font-size: 19px;
+ width: 17%;
+}
+.form-input .text-input.ng-pristine.ng-invalid.ng-invalid-required.ng-touched {
+ width: 138px;
+}
+.act_right .text-input.ng-pristine.ng-invalid.ng-invalid-required.ng-touched {
+ width: 202px;
+}
+.end_date {
+ width: 30%;
+ float:left;
+}
+.no_enddate {
+ float: left;
+ font-family: "dosis-regular";
+ font-size: 19px;
+ width: 20%;
+ padding:8px 0;
+}
+.form-textarea, .geoff-fields {
+ float: left;
+ width: 82%;
+}
+/****** 19Aug******/
+
+.left_section{
+  width:60%;
+  height: auto;
+  min-height: 779px !important;
+  max-height: 0px;
+}
+.left-bottom{
+  width:60%;
+}
+.chosen-container{
+  padding-left: 131px;
+  margin-top: -65px !important;
+}
+.manage_tab_view .form-group.select select{
+
+   margin-top: 3px;
+}
+.right-section{
+ margin-left: -100px;
+}
+.manageactivity_form .form-group .label, .managemeal_form .form-group .label{
+  width: 33%;
+}
+.manage_tab_view .form-group.select select{
+  margin-top: -44px;
+}
+.chosen-container .chosen-drop{
+  width: 64%;
+}
+.activity-area{
+  padding: 45% 0;
+}
+
+}
+
+@media (max-width: 767px){
+    body{
+        overflow: hidden;
+    }
+	.one-fourth
+    {
+        width: 82%;
+	    padding: 0 8px;
+    }
+    .left_section{
+        max-height: 700px;
+        min-height:800px;
+        height:auto;
+    }
+    .left-bottom{
+        height: 100%;
+    }
+    .heading
+    {
+        font-size: 29px;
+    }
+    .heading-tag
+    {
+        font-size: 14px;
+    }
+
+
+    .login-form {
+        margin:10% auto 0;
+        width: 80%;
+    }
+
+    .footer{
+        margin-top: 45px;
+    }
+    /* Manage activity */
+    .left_section{
+        max-height: 700px;
+        min-height:800px;
+        height:auto;
+    }
+    .left-bottom{
+        height: auto;
+    }
+    /* plan meal */
+    .geoff-form{
+        margin: 20px 0;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+    .form-group .label{
+        width: 18%;
+        padding:4px 0;
+    }
+
+    .start_date {
+        float: left;
+        width: 50%;
+    }
+    .start_date .label {
+        float: left;
+        width: 36% !important;
+    }
+    .form-textarea,
+    .geoff-fields{
+        width: 75%;
+        float: left;
+    }
+    .save-button{
+        width: auto;
+        padding-left: 20%;
+    }
+    .geoff-fields .label.meal-closing-time{
+        width: 25%;
+        text-align: right;
+    }
+    .form-input{
+        width: 57%;
+    }
+    .geoff-fields .form-input{
+        width: 36.5%;
+    }
+    .geoff-fields .form-input input{
+        width: 100%;
+    }
+    .geoff-fields .form-input:last-child{
+        float: right;
+    }
+    .geoff-fields .label.geoff-event{
+        width: 30%;
+        text-align: right;
+    }
+    .geoff-plan-event-field .form-input{
+        width: 34%;
+    }
+
+    /********* 15 april ******/
+
+.act_left {
+ float: left;
+ width: 50%;
+}
+.act_right {
+ float: right;
+ width: 50%;
+}
+.act_left .label {
+ width: 36%;
+}
+.act_right .label.geoff-event {
+ width: 43%;
+}
+.act_right .text-input.ng-pristine.ng-valid.ng-touched {
+ width: 204px;
+}
+.end_date .text-input.ng-pristine.ng-valid.ng-touched {
+ width: 173px;
+
+}.text-input.ng-pristine.ng-valid.ng-valid-required.ng-touched {
+ width: 141px;
+ margin-left: 5px;
+}
+.no_enddate {
+ float: left;
+ font-family: "dosis-regular";
+ font-size: 19px;
+ width: 17%;
+}
+.form-input .text-input.ng-pristine.ng-invalid.ng-invalid-required.ng-touched {
+ width: 138px;
+}
+.act_right .text-input.ng-pristine.ng-invalid.ng-invalid-required.ng-touched {
+ width: 202px;
+}
+.end_date {
+ width: 30%;
+ float:left;
+}
+.no_enddate {
+ float: left;
+ font-family: "dosis-regular";
+ font-size: 19px;
+ width: 20%;
+ padding:8px 0;
+}
+.form-textarea, .geoff-fields {
+ float: left;
+ width: 82%;
+}
+ /******* 20 Aug ******/
+
+.left_section{
+  width: 60%;
+}
+.left-bottom{
+  width: 60%;
+}
+.activity-area{
+  padding: 40% 0;
+}
+.right-section{
+ margin-left: -85px;
+}
+.manageactivity_form .form-group .label, .managemeal_form .form-group .label{
+  width: 33%;
+  margin-left: -30px;
+}
+.manage_tab_view .form-group.select select{
+
+  margin-top: 0px;
+}
+.chosen-container{
+  float: right;
+}
+
+
+}
+@media (max-width: 640px){
+  .col {
+    -moz-box-flex: 1;
+    box-sizing: border-box;
+    display: block;
+    flex:  auto;
+    width: 50%;
+    margin-bottom:20px;
+  }
+  form {
+    float: left;
+    margin: 0 auto 0 15px;
+    width: 94%;
+  }
+  .form-group .label
+  {
+     font-size: 18px;
+     margin-right: 4px;
+     padding: 4px 0;
+     width: 92px;
+  }
+  .select select
+  {
+    padding: 6px 0;
+  }
+
+  .form-textarea, .geoff-fields {
+    float: left;
+    width: 60%;
+  }
+  .act_left
+  {
+     width:100%;
+  }
+  .act_right
+  {
+     width:100%;
+  }
+
+  .act_right .label.geoff-event {
+      width:92px;
+  }
+  .start_date
+  {
+    width:100%;
+  }
+  .start_date .label,.end_date .label
+  {
+    width:92px !important;
+  }
+  .no_enddate
+  {
+    width:100%;
+  }
+  .end_date {
+    float: left;
+    width: 100%;
+  }
+  .act_left {
+    margin-bottom: 10px;
+    width: 100%;
+  }  
+  .end_date .form-input
+  {
+    width:57%;
+  }
+
+  /********** 19Aug ************/
+
+  .left-bottom img {
+    width: 120px;
+    display: none;
+}
+.manage_tab_view .form-group.select select{
+  float: right;
+  margin-top:0px;
+}
+.left_section{
+  height: auto;
+  min-height: 0px !important;
+  max-height: 100px;
+}
+.row{
+  flex: none;
+}
+.list__item:first-child:last-child{
+  text-align: center;
+}
+.chosen-container{
+  float: right;
+  margin-top: 0px;
+}
+
+.chosen-container.chosen-with-drop .chosen-drop{
+  margin: 0px;
+}
+.left-bottom{
+  width: 100%;
+}
+.left_section{
+
+ width: 100%;
+}
+.activity-area{
+  margin-left: 110px;
+}
+.manageactivity_form .form-group .label, .managemeal_form .form-group .label{
+ 
+ width: 34%;
+}
+.activity-area{
+  width: 94%;
+}
+.activity-area{
+  padding: 10% 0;
+}
+
+
+}
+
+@media (max-width: 480px){
+  .col {
+    -moz-box-flex: 1;
+    box-sizing: border-box;
+    display: block;
+    flex:  auto;
+    width: 80%;
+    margin-bottom:20px;
+  }
+  .manageactivity_form .form-group .label, .managemeal_form .form-group .label{
+    width: 38%;
+  }
+
+}
+
+
+
+@media ( min-width: 600px) and ( max-width: 980px ) and (orientation: portrait) {
+
+.left_section{
+height:auto;
+min-height: 754px !important;
+max-height: 0px;
+width: 60%;
+}
+.left-bottom{
+  width: 60%;
+}
+.left-bottom img{
+
+  display: initial;
+ 
+  }
+.col{
+
+margin-bottom: 0px;
+/*flex:none;*/
+}
+.one-fourth {
+  margin-top: 20px;
+}
+
+.manageactivity_form .form-group .label, .managemeal_form .form-group .label{
+  width: 41%;
+}
+.manage_tab_view .form-group.select select{
+   margin-top: -40px;
+}
+.chosen-container{
+  margin-top: -43px;
+}
+.activity-area{
+
+margin-left: 40px;
+padding: 50% 0;
+}
+
+}

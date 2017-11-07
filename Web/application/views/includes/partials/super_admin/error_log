@@ -1,0 +1,1 @@
+[21-Apr-2016 06:01:08 UTC] PHP Fatal error:  Using $this when not in object context in /home/development002/public_html/community/application/views/includes/partials/super_admin/topmenu.php on line 3

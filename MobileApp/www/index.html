@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<!-- CSP support mode (required for Windows Universal apps): https://docs.angularjs.org/api/ng/directive/ngCsp -->
+<html lang="en" ng-app="app" ng-csp>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="apple-mobile-R@nd3nSala+web-app-capable" content="yes"/>
+        <meta name="mobile-web-app-capable" content="yes"/>
+        <!-- JS dependencies (order matters!) -->
+        <script src="scripts/platformOverrides.js"></script>
+        <script src="lib/angular/angular.js"></script>
+        <script src="lib/onsen/js/onsenui.js"></script>
+        <script type="text/javascript" src="index.js"></script>
+        <!-- Cordova reference -->
+        <script src="cordova.js"></script>
+        <script src="js/index.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/app.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+         
+        <!-- CSS dependencies -->
+        <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
+        <link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css" />
+        <!-- CSP support mode (required for Windows Universal apps) -->
+        <link rel="stylesheet" href="lib/angular/angular-csp.css" />
+        <link rel="stylesheet" href="schedule.css">
+        <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css"/>
+        <style>
+            html
+            {
+                font-size : 14px ;
+                font-family : Arial, Helvetica, sans-serif ;
+            }
+        </style>
+                
+        <!--  <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script> -->
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+        <script type="text/javascript" src="bower_components/fullcalendar/dist/fullcalendar.js"></script>
+        <script type="text/javascript" src="bower_components/fullcalendar/dist/gcal.js"></script>
+        <script src="js/console.js"></script>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css"/>
+        <!-- --------------- App init ---------------  -->
+        <title>Mobile App</title>
+    </head>
+    
+    <body ng-controller="MainController" id="main-ctrl">
+        <!-- Loading app -->
+        <ons-modal var="modal">
+            <ons-icon icon="ion-load-c" spin="true"></ons-icon>
+            <br>Verifying your number.....
+        </ons-modal>
+        <ons-modal var="newmodal">
+            <ons-icon icon="ion-load-c" spin="true"></ons-icon>
+            <br>Loading.....
+        </ons-modal>
+        
+        <ons-navigator var="mob">
+            <ons-page ng-controller="MobileController" class="authpage">
+                <div class="auth_content_outer">
+                    <div class="auth_content_inner">
+                        <ons-row class="row-center auth_content">
+                            <ons-col>
+                                <div class="one-third">
+                                    <div class="main-center auth_page" ng-click="app_sendSms()">
+                                        <span class="img"><img src="img/resident.png"></span>
+                                        <a>Resident</a>
+                                    </div>
+                                </div>
+                                <div class="one-third">
+                                    <div class="main-center auth_page" ng-click="app_child_sendSms()"> 
+                                        <span class="img"><img src="img/care.png"></span>
+                                        <a>Care</a>
+                                    </div>
+                                </div>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+                </div>
+            </ons-page>
+        </ons-navigator>
+        
+        <ons-template name="auth" id="auth.html">
+            <ons-page ng-controller="MobileController" class="authpage">
+                <div class="auth_content_outer">
+                    <div class="auth_content_inner">
+                        <ons-row class="row-center auth_content">
+                            <ons-col>
+                                <div class="one-third">
+                                    <div class="main-center auth_page" ng-click="app_sendSms()">
+                                        <span class="img"><img src="img/resident.png"></span>
+                                        <a>Resident</a>
+                                    </div>
+                                </div>
+                                <div class="one-third">
+                                    <div class="main-center auth_page" ng-click="open_child_login()">
+                                        <span class="img"><img src="img/care.png"></span>
+                                        <a>Care</a>
+                                    </div>
+                                </div>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+                </div>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template name="auth" id="schedule.html">
+            <ons-page ng-controller="MobileController" class="authpage">
+                <ons-toolbar ng-hide="care_name == null">
+                    <div class="left">
+                        <ons-toolbar-button ng-if="!isLoggedIn()" ng-click="goBackCare();">
+                            <ons-icon icon="ion-chevron-left" class="icon-intro-skip"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center">{{care_name}} [Care]</div>
+                    <div class="right"></div>
+                </ons-toolbar><br>
+                <div class="auth_content_outer">
+                    <div class="auth_content_inner">
+                        <ons-row class="row-center auth_content">
+                            <ons-col>
+                                <div class="one-third">
+                                    <div class="main-center auth_page" ng-click="site_schedule()">
+                                        <span class="img"><img src="img/calendar_2.png"></span>
+                                        <a>Site Schedule</a>
+                                    </div>
+                                </div>
+                                <div class="one-third">
+                                    <div class="main-center auth_page" ng-click="resident_schedule()">
+                                        <span class="img"><img src="img/calendar_1.png"></span>
+                                        <a>Resident schedule</a>
+                                    </div>
+                                </div>
+                                <div class="one-third">
+                                    <div class="main-center auth_page" ng-click="goCreditPay()" ng-hide="{{hide_subscription == true}}">
+                                        <span class="img"><ons-icon icon="fa-credit-card" size="50px"></ons-icon></span>
+                                        <a>Update Subscription</a>
+                                    </div>
+                                </div>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+                </div>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template  id="Care_belongs.html">
+            <ons-page class="authpage">
+                <ons-toolbar ng-hide="care_name == null">
+                    <div class="left"></div>
+                    <div class="center"> Resident Care Details</div>
+                    <div class="right"></div>
+                </ons-toolbar><br>
+                <ons-icon icon="md-face"></ons-icon>
+                <div class="auth_content_outer">
+                    <div class="auth_content_inner">
+                        <ons-row class="row-center auth_content">
+                            <ons-col>
+                                <div class="one-third" ng-repeat="resident in resident_details">
+                                    <div class="main-center auth_page">
+                                        <span class="img" ng-click="care_belongs_to(resident.resident_id)">
+                                            <img src="img/child_care.png">
+                                        </span>
+                                        <a>{{resident.resident_name}}</a>
+                                    </div>
+                                </div>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+                </div>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="careRegister_after.html">
+            <ons-page ng-controller = "ScheduleCalendarController">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-home" size="20px"></ons-icon></ons-toolbar-button>
+                    </div>
+                    <div class="center">
+                        <img class="centerimg" src="img/tab-1.png"/>
+                        <span>Register As Care</span>
+                    </div>
+                    <div class="right">
+                    </div>
+                </ons-toolbar>
+                
+                <button type="button" class="button button--outline login_button" ng-click="goCreditPay_after()">Continue</button>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template name="auth" id="calendar.html">
+            <ons-page ng-controller="MobileController" class="login">
+                <ons-row class="row-center">
+                    <ons-col>
+                        <div class="login-screen">
+                            <form ng-submit="site_code_verify(site_code)">
+                                <span class="lg_span"><h2>Enter Site Code</h2></span>
+                                <span class="lg_span">Please enter your valid site code to view Event Calendar</span>
+                                <input type="text" name="site_code" ng-model="site_code" id="site_code" class="text-input--underbar" required>
+                                    <button type="submit" class="button button--outline login_button">Submit</button>
+                                    </form>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template name="auth" id="careRegister.html">
+            <ons-page ng-controller="MobileController" class="login">
+                <ons-row class="row-center">
+                    <ons-col>
+                        <div class="register-screen care_register">
+                            <form name="care_form" ng-submit="careRegister(form)">
+                                <span class="lg_span"><h3>Enter Your Details</h3></span>
+                                <p>Resident You Wish To Care</p>
+                                <input type="tel" name="x_resident" ng-model="form.resident"  ng-init="form.resident = resident_mobile" class="text-input--underbar" placeholder="Resident Number" ng-minlength="10" ng-maxlength="10" required>
+                                <br>
+                                <br>
+                                <input type="text" name="x_first_name" ng-model="form.firstname" class="text-input--underbar" placeholder="Your First Name" required>
+                                <input type="text" name="x_last_name" ng-model="form.lastname" class="text-input--underbar" placeholder="Your Last Name" required>
+                                <input type="tel" name="x_mobile" ng-model="form.mobile" ng-init="form.mobile = care_mobile"class="text-input--underbar" placeholder="Your Mobile Number" ng-minlength="10" ng-maxlength="10" required>
+                                <input type="email" name="x_email" ng-model="form.email" class="text-input--underbar" placeholder="Your Email" required><br>
+                                <div>
+                                    <span class="error" ng-show="care_form.x_resident.$error.maxlength">Resident Number should be 10 digits</span>
+                                    <span class="error" ng-show="care_form.x_mobile.$error.maxlength">Year should be 10 digits</span>
+                                </div>
+                                <div class="radio_sec">
+                                    <p><input type="radio" name="x_gender" ng-model="form.gender" value="male" checked> <span>Male</span></p>
+                                    <p><input type="radio" name="x_gender" ng-model="form.gender" value="female"> <span>Female</span></p>
+                                </div>
+                                <button type="submit" class="button button--outline login_button">Next >></button>
+                                <button type="submit" class="button button--outline login_button" ng-click="previousPage()"> >>previous </button>
+                            </form>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template name="auth" id="carePay.html">
+            <ons-page ng-controller="MobileController" class="login">
+                <ons-row class="row-center">
+                    <ons-col>
+                        <div class="login-screen care_register">
+                            <form name="care_form" ng-submit="careAccountPay(form)">
+                                <span class="lg_span"><h3>Enter Subscription Details</h3></span>
+                                <span class="lg_span"><h4>Personal Details</h4></span>
+                                <input type="text" name="x_first_name" ng-model="form.firstname" class="text-input--underbar" ng-init="form.firstname = register_firstname" id="care_first_name" placeholder="First Name" required>
+                                <input type="text" name="x_last_name" ng-model="form.lastname" class="text-input--underbar" ng-init="form.lastname = register_lastname" placeholder="Last Name" id="care_last_name" required>
+                                <input type="text" name="x_address" ng-model="form.address" class="text-input--underbar" placeholder="Address" required>
+                                <input type="text" name="x_city" ng-model="form.city" class="text-input--underbar" placeholder="City" required>
+                                <input type="text" name="state" ng-model="form.state" class="text-input--underbar" placeholder="State(ex: AK/Alaska)" ng-minlength="2" ng-maxlength="2" required>
+                                <span class="error" ng-show="care_form.state.$error.maxlength">State should be 2 Characters</span>
+                                <input type="tel" name="x_zip" ng-model="form.zip" class="text-input--underbar" placeholder="Zip Code" required>
+                                <br>
+                                <br>
+                                <br>
+                                <span class="lg_span"><h4>Credit Card Details</h4></span>
+                                <input type="tel" name="x_card_num" ng-model="form.card_num" class="text-input--underbar" placeholder="Card Number" required>
+                                <br>
+                                <br>
+                                <span class="lg_span">Expiry Details:</span>
+                                <!-- <input type="number" name="x_month" ng-model="form.month" class="text-input--underbar" placeholder="Month(ex: 01/Jan)" required> -->
+                                <label>Month</label></br>
+                                <select ng-model="form.month" class="select_month_custom">
+                                    <option value=''>--Select Month--</option>
+                                    <option selected value='01'>Janaury</option>
+                                    <option value='02'>February</option>
+                                    <option value='03'>March</option>
+                                    <option value='04'>April</option>
+                                    <option value='05'>May</option>
+                                    <option value='06'>June</option>
+                                    <option value='07'>July</option>
+                                    <option value='08'>August</option>
+                                    <option value='09'>September</option>
+                                    <option value='10'>October</option>
+                                    <option value='11'>November</option>
+                                    <option value='12'>December</option>
+                                </select> 
+                                <br>
+                                <!-- <input type="number" name="year" ng-model="form.year" class="text-input--underbar" placeholder="Yr(ex: 2017)" ng-minlength="4" ng-maxlength="4" required> -->
+                                <label>Year</label></br>
+                                <select ng-model="form.year" class="select_month_custom">
+                                    <option value=''>--Select Year--</option>
+                                    <option selected value='2017'>2017</option>
+                                    <option value='2017'>2017</option>
+                                    <option value='2018'>2018</option>
+                                    <option value='2019'>2019</option>
+                                    <option value='2020'>2020</option>
+                                    <option value='2021'>2021</option>
+                                    <option value='2022'>2022</option>
+                                    <option value='2023'>2023</option>
+                                    <option value='2024'>2024</option>
+                                    <option value='2025'>2025</option>
+                                    <option value='2026'>2026</option>
+                                    <option value='2027'>2027</option>
+                                </select> 
+                                <span class="error" ng-show="care_form.year.$error.maxlength">Year should be 4 digits</span>
+                                <button type="submit" class="button button--outline login_button">Submit</button>
+                            </form>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template name="login" id="manuallogin.html">
+            <ons-page ng-controller="mloginController" class="login">
+                <ons-row class="row-center">
+                    <ons-col>
+                        <form name="loginform" ng-submit="manual_login(phone)">
+                            <div class="login-screen">
+                                <span class="lg_span"><h2>Resident Login</h2></span>
+                                <div style="display: none;">
+                                    <span class="lg_span">Select User :</span>
+                                    <label class="radio-button radio-button--material">
+                                        <input type="radio" class="radio-button__input radio-button--material__input" name="user" ng-model="user" value="resident" checked>
+                                        <div class="child_class radio-button__checkmark radio-button--material__checkmark"></div>
+                                        Resident
+                                    </label>
+                                    <label class="child_class radio-button radio-button--material">
+                                        <input type="radio" class="radio-button__input radio-button--material__input" name="user" ng-model="user" value="child">
+                                            <div class="child_class radio-button__checkmark radio-button--material__checkmark"></div>
+                                            Care
+                                            </label>
+                                    <span class="error">{{usrerror}}</span>
+                                </div>
+                                <span class="lg_span">Please enter your valid mobile number</span>
+                                <input type="text" value="+1" class="text-input--underbar readonly"  readonly>
+                                    <input type="tel" name="phone" placeholder="xxxxxxxxxx" class="text-input--underbar" ng-minlength="10" ng-maxlength="10" ng-model="phone" ng-enter="manual_login(phone)" required>
+                                        <br><span class="error">{{msgerror}}</span>
+                                        <span class="error" ng-show="loginform.phone.$error.maxlength && loginform.phone.$dirty">Phone number should be 10 digits
+                                        </span>
+                                        <button type="submit" class="button button--outline login_button">Submit</button>
+                                        </div>
+                        </form>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template name="login" id="childManualLogin.html">
+            <ons-page ng-controller="mloginController" class="login">
+                <ons-row class="row-center">
+                    <ons-col>
+                        <form name="loginform" ng-submit="child_manual_login(phone)">
+                            <span class="lg_span"><h2>Care Login</h2></span>
+                            <div class="login-screen">
+                                <span class="lg_span">Please enter your valid mobile number</span>
+                                <input type="text" value="+1" class="text-input--underbar readonly"  readonly>
+                                <input type="tel" name="phone" placeholder="xxxxxxxxxx" class="text-input--underbar" ng-minlength="10" ng-maxlength="10" ng-model="phone" ng-keyup="mobile_validate(phone)" ng-enter="child_manual_login(phone)" required>
+                                <br><span class="error">{{msgerror}}</span>
+                                <span class="error" ng-show="loginform.phone.$error.maxlength && loginform.phone.$dirty">Phone number should be 10 digits</span>
+                                <div class="inline_sec">
+                                    <button type="submit" class="button button--outline login_button">Register as Care</button>
+                                    <button type="button" class="button button--outline login_button" ng-click="go_site_calendar()">Site View Only</button>
+                                </div>
+                            </div>
+                        </form>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template name="home" id="home.html">
+            <ons-page ng-controller="MobileController" class="homepage">
+                <ons-toolbar>
+                    <div class="left"></div>
+                    <div class="center">Welcome {{username}}</div>
+                    <div class="right"></div>
+                </ons-toolbar><br>
+                <ons-row class="row-center">
+                    <ons-col>
+                        <div class="one-third do_something">
+                            <div class="main-center do_something">
+                                <span class="img" ng-click="showEvents($index)"><img src="img/icon-1-black.png"></span>
+                                <a ng-click="showEvents($index)">Do Something</a>
+                            </div>
+                        </div>
+                        <div class="one-third do_something">
+                            <div class="main-center do_something">
+                                <span class="img" ng-click="showMeals($index)"><img src="img/icon-2-black.png"></span>
+                                <a ng-click="showMeals($index)">Eat Something</a>
+                            </div>
+                        </div>
+                        <div class="one-third last do_something">
+                            <div class="main-center do_something">
+                                <span class="img" ng-click="showMydays($index)"><img src="img/icon-3-black.png"></span>
+                                <a ng-click="showMydays($index)">My Day</a>
+                            </div>
+                        </div>
+                        <div class="one-third last do_something1">
+                            <div class="main-center">
+                                <a ng-click="add_family()">Add Family</a>
+                            </div>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template name="home" id="home_child.html">
+            <ons-page ng-controller="MobileController" class="homepage">
+                <ons-toolbar>
+                    <div class="left"></div>
+                    <div class="center">Welcome {{username}}</div>
+                    <div class="right"></div>
+                </ons-toolbar><br>
+                <ons-row class="row-center">
+                    <ons-col>
+                        <div class="one-third last">
+                            <div class="main-center">
+                                <span class="img" ng-click="showMydaysChild($index)"><img src="img/icon-3-black.png"></span>
+                                <a ng-click="showMydaysChild($index)">My Parent Events</a>
+                            </div>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="tabs.html">
+            <ons-page class="nav-tabs">
+                <ons-tabbar var="bottomtab" animation="fade">
+                    <ons-tab page="dosomething.html">
+                        <img class="bottomtab" src="img/tab-1.png"/>
+                    </ons-tab>
+                    <ons-tab page="eatsomething.html">
+                        <img class="bottomtab" src="img/tab-2.png"/>
+                    </ons-tab>
+                    <ons-tab page="myday.html">
+                        <img class="bottomtab" src="img/tab-3.png"/>
+                    </ons-tab>
+                </ons-tabbar>
+            </ons-page>
+        </ons-template>
+        
+        <div class="navbar navbar-inverse navbar-fixed-bottom">
+            <div class="container-fluid">
+                <ons-page class="nav nav-tabs navbar-nav">
+                    <ons-tabbar var="bottomtab" animation="fade">
+                        <ons-tab ng-click="showEventsRefresh(1)" ng-class="{active: appdata.selected == 1}"><img class="bottomtab" src="img/tab-1.png"/></ons-tab>
+                        <ons-tab ng-click="showMealsRefresh(2)" ng-class="{active: appdata.selected == 2}"><img class="bottomtab" src="img/tab-2.png"/></ons-tab>
+                        <ons-tab ng-click="showMydays(3)" ng-class="{active: appdata.selected == 3}"><img class="bottomtab" src="img/tab-3.png"/></ons-tab>
+                    </ons-tabbar>
+                </ons-page>
+            </div>
+        </div>
+        
+        <ons-template id="dosomething.html">
+            <ons-page ng-controller="DoSomethingController">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-chevron-left" size="20px"></ons-icon></ons-toolbar-button>
+                    </div>
+                    <div class="center">
+                        <img class="centerimg" src="img/tab-1.png"/>&nbsp;<span>Do Something</span>
+                    </div>
+                    <div class="right">
+                        <ons-toolbar-button ng-click="showEventsRefresh();"><ons-icon icon="fa-refresh" size="20px"></ons-icon></ons-toolbar-button>
+                    </div>
+                </ons-toolbar>
+                <br/>
+                <ons-tabbar position="top">
+                    <ons-tab page="tab_myday.html" active="true">
+                        <div class="button-bar" style="width:200px; margin:8px auto 0;">
+                            <div class="button-bar__item">
+                                <input type="radio" name="navi-segment-a">
+                                    <div class="button-bar__button">My Day</div>
+                                    </div>
+                        </div>
+                    </ons-tab>
+                    <ons-tab page="tab_thirdParty.html">
+                        <div class="button-bar" style="width:200px; margin:8px auto 0;">
+                            <div class="button-bar__item">
+                                <input type="radio" name="navi-segment-a">
+                                    <div class="button-bar__button">3rd Party</div>
+                                    </div>
+                        </div>
+                    </ons-tab>
+                </ons-tabbar>
+                <br/>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="tab_myday.html">
+            <ons-page>
+                <ons-row>
+                    <ons-col>
+                        <div class="one-col">
+                            <div class="top-section">
+                                <h3 style="text-align: center;">My Day Events</h3>
+                                <ons-list class="list-top" ng-repeat="day in appdata.ekeys" ng-if="appdata.ekeys != 0">
+                                    <ons-list-header>{{day | date:'EEEE MMMM dd'}}</ons-list-header>
+                                    <ons-list ng-repeat="allevents in appdata.getevents[day]">
+                                        <ons-list-item modifier="chevron" ng-repeat="event in allevents" ng-class="{'highlighted' : event.status == 1}" ng-click="event_detail(event,day)">
+                                            <ons-row>
+                                                <ons-col width="80px" class="plan-left">
+                                                    <div class="plan-date">{{gettime(event.meetup_time)}}</div>
+                                                </ons-col>
+                                                <ons-col width="6px" class="plan-center" ng-style="{backgroundColor:a % 3 == 1 ? '#3399ff' : '#ccc'}"></ons-col>
+                                                <ons-col class="plan-right">
+                                                    <div class="plan-name">{{event.event_name}} </div>
+                                                    <div class="plan-info">
+                                                        <div ng-hide="a % 3 == 0">{{event.description}}</div>
+                                                    </div>
+                                                </ons-col>
+                                            </ons-row>
+                                        </ons-list-item>
+                                    </ons-list>
+                                </ons-list>
+                                <ons-list>
+                                    <ons-list-item ng-if="appdata.ekeys==0"><span class="data_error">No Data Available</span></ons-list-item>
+                                </ons-list>
+                            </div>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="tab_thirdParty.html">
+            <ons-page>
+                <ons-row>
+                    <ons-col>
+                        <div class="one-col">
+                            <div class="top-section">
+                                <h3 style="text-align: center;">3rd Party Events</h3>
+                                <ons-list class="list-top" ng-repeat="day in appdata.ekeys_api" ng-if="appdata.ekeys_api != 0">
+                                    <ons-list-header>{{day | date:'EEEE MMMM dd'}}</ons-list-header>
+                                    <ons-list ng-repeat="allevents in appdata.getevents_api[day]">
+                                        <ons-list-item modifier="chevron" ng-repeat="event in allevents" ng-class="{'third_party' : event.status == 1}" ng-click="event_detail(event,day)">
+                                            <ons-row>
+                                                <ons-col width="80px" class="plan-left">
+                                                    <div class="plan-date">{{gettime(event.meetup_time)}}</div>
+                                                </ons-col>
+                                                <ons-col width="6px" class="plan-center" ng-style="{backgroundColor:a % 3 == 1 ? '#3399ff' : '#ccc'}"></ons-col>
+                                                <ons-col class="plan-right">
+                                                    <div class="plan-name">{{event.event_name}} </div>
+                                                    <div class="plan-info">
+                                                        <div ng-hide="a % 3 == 0">{{event.description}}</div>
+                                                    </div>
+                                                </ons-col>
+                                            </ons-row>
+                                        </ons-list-item>
+                                    </ons-list>
+                                </ons-list>
+                                <ons-list>
+                                    <ons-list-item ng-if="appdata.ekeys_api == 0"><span class="data_error">No Data Available</span></ons-list-item>
+                                </ons-list>
+                            </div>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+
+        <ons-template id="add_family.html">
+            <ons-page ng-controller="AddFamilyController">
+                <ons-toolbar>
+                    <div class="left"></div>
+                    <div class="center"><span>Resident : {{username}}</span></div>
+                    <div class="right">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-home" size="24px"></ons-icon></ons-toolbar-button>
+                    </div>
+                </ons-toolbar>
+                <div class="care_page">
+                    <div class="col-md-12 col-sm-12 ">
+                        <div class="main_outer_sectin">
+                            <div class="col-md-12 col-sm-12">
+                                <form name=" newForm" ng-submit="remind_resident()">        
+                                    <div>
+                                        <div>
+                                            <div>
+                                                <div class="care_list carelist_2">
+                                                    <div class="care_form_head" style="text-align: center;">INVITE CARE</div>
+                                                    <label>
+                                                        <div ng-repeat="care_list_single in care_list" ng-show="{{care_exist != 0}}">
+                                                            <ul>
+                                                                <li>{{care_list_single.mobile}}</li>
+                                                                <li>
+                                                                    <div ng-hide="{{care_list_single.registration_status == 0}}">
+                                                                        {{care_list_single.name}}
+                                                                    </div>
+                                                                    <div ng-hide="{{care_list_single.registration_status == 1}}">
+                                                                        <span style="color:#ed1229e6;">Registration Pending</span>
+                                                                        <ons-button modifier="outline" class="resend_btn" ng-click="resendMessage(care_list_single.mobile)">Resend</ons-button>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </label>
+                                                    <div>
+                                                        <!-- 1st Input Field -->
+                                                        <div ng-hide="{{care_exist}} == 4">
+                                                            <ul class="bottom_section">
+                                                                <li><input type="tel" phone-number placeholder="phone number" name='numValue1' ng-model="Contactno1" class="phnnum_all_input" id="phonenum1"></li>
+                                                            <p style="display:none;">OR</p>
+                                                            <li style="display:none;">
+                                                            <div class="dropdown_cstm">
+                                                            <div class="dropdown" auto-close="outsideClick">
+                                                                <button class="btn btn-default dropdown-toggle individualDrop1" type="button" id="individualDrop" data-toggle="dropdown"><span class="caret pull-right"></span></button>
+                                                                
+                                                                <ul class="dropdown-menu gh" role="menu" aria-labelledby="individualDrop">
+                                                                    <input class="search_input" disable-auto-close type="search" ng-model="serchFilter"  placeholder="Search" style="width: 188px;">
+                                                                    <div ng-repeat="indi in contacts | filter: serchFilter">
+                                                                        <li class="list_care_profile" role="presentation" ng-model="form.care[indi.number]" ng-click="selectEntity1(indi)">
+                                                                            <div class="span_outer">
+                                                                                <span>{{indi.firstName}} {{indi.lastName}}</span>
+                                                                                <p>{{indi.number}}</p>
+                                                                            </div>
+                                                                        </li>
+                                                                    </div>
+                                                                </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                            </ul>
+                                                        </div>
+                                                    
+                                                        <!-- 2nd Input Field -->
+                                                        <div ng-hide="{{care_exist}} == 4||{{care_exist}}==3">
+                                                            <ul class="bottom_section">
+                                                                <li>
+                                                            <input type="tel" phone-number placeholder="phone number" name='numValue12' ng-model="Contactno2" class="phnnum_all_input" id="phonenum2"></li>
+                                                            <p style="display:none;">OR</p>
+                                                            <li style="display:none;">
+                                                            <div class="dropdown_cstm">
+                                                            <div class="dropdown" auto-close="outsideClick">
+                                                                <button class="btn btn-default dropdown-toggle individualDrop2" type="button" id="individualDrop" data-toggle="dropdown"><span class="caret pull-right"></span></button>
+                                                                <ul class="dropdown-menu gh" role="menu" aria-labelledby="individualDrop">
+                                                                    <input class="search_input" disable-auto-close type="search" ng-model="serchFilter"  placeholder="Search" style="width: 188px;">
+                                                                    <div ng-repeat="indi in contacts | filter: serchFilter">
+                                                                        <li class="list_care_profile" role="presentation" ng-model="form.care[indi.number]" ng-click="selectEntity1(indi)">
+                                                                            <div class="span_outer">
+                                                                                <span>{{indi.firstName}} {{indi.lastName}}</span>
+                                                                                <p>{{indi.number}}</p>
+                                                                            </div>
+                                                                        </li>
+                                                                    </div>
+                                                                </ul>
+                                                            </div>
+                                                            </div>
+                                                             </li>
+                                                         </ul>
+                                                        </div>
+                                                        <!-- 3rd Input Field -->
+                                                        <div ng-hide="{{care_exist}} == 4||{{care_exist}}==3||{{care_exist}}==2">
+                                                             <ul class="bottom_section">
+                                                                <li>
+                                                            <input type="tel" phone-number placeholder="phone number" name='numValue3' ng-model="Contactno3" class="phnnum_all_input" id="phonenum3"></li>
+                                                            <p style="display:none;">OR</p>
+                                                            <li style="display:none;">
+                                                            <div class="dropdown_cstm">
+                                                            <div class="dropdown" auto-close="outsideClick">
+                                                                <button class="btn btn-default dropdown-toggle individualDrop3" type="button" id="individualDrop" data-toggle="dropdown"><span class="caret pull-right"></span></button>
+                                                                <ul class="dropdown-menu gh" role="menu" aria-labelledby="individualDrop">
+                                                                    <input class="search_input" disable-auto-close type="search" ng-model="serchFilter"  placeholder="Search" style="width: 188px;">
+                                                                    <div ng-repeat="indi in contacts | filter: serchFilter">
+                                                                        <li class="list_care_profile" role="presentation" ng-model="form.care[indi.number]" ng-click="selectEntity1(indi)">
+                                                                            <div class="span_outer">
+                                                                                <span>{{indi.firstName}} {{indi.lastName}}</span>
+                                                                                <p>{{indi.number}}</p>
+                                                                            </div>
+                                                                        </li>
+                                                                    </div>
+                                                                </ul>
+                                                            </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                        </div>
+                                                        <!-- 4th Input Field -->
+                                                        <div ng-hide="{{care_exist}} == 4||{{care_exist}}==3||{{care_exist}}==2||{{care_exist}}==1">
+                                                             <ul class="bottom_section">
+                                                                <li>
+                                                            <input type="tel" phone-number placeholder="phone number" name='numValue4' ng-model="Contactno4" class="phnnum_all_input" id="phonenum4"></li>
+                                                            <p style="display:none;">OR</p>
+                                                            <li style="display:none;">
+                                                            <div class="dropdown_cstm">
+                                                            <div class="dropdown" auto-close="outsideClick">
+                                                                <button class="btn btn-default dropdown-toggle individualDrop4" type="button" id="individualDrop" data-toggle="dropdown"><span class="caret pull-right"></span></button>
+                                                                <ul class="dropdown-menu gh" role="menu" aria-labelledby="individualDrop">
+                                                                    <input class="search_input" disable-auto-close type="search" ng-model="serchFilter"  placeholder="Search" style="width: 188px;">
+                                                                    <div ng-repeat="indi in contacts | filter: serchFilter">
+                                                                        <li class="list_care_profile" role="presentation" ng-model="form.care[indi.number]" ng-click="selectEntity1(indi)">
+                                                                            <div class="span_outer">
+                                                                                <span>{{indi.firstName}} {{indi.lastName}}</span>
+                                                                                <p>{{indi.number}}</p>
+                                                                            </div>
+                                                                        </li>
+                                                                    </div>
+                                                                </ul>
+                                                            </div>
+                                                            </div>  
+                                                        </div> 
+                                                        </li>
+                                                        </ul>                                                 
+                                                    </div>
+                                                    <br>
+                                                    <div class="button_custom">
+                                                        <button type="submit">ADD</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ons-page>
+        </ons-template>
+
+        <ons-template id="eatsomething.html">
+            <ons-page ng-controller="EatSomethingController">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-if="!isLoggedIn()" ng-click="goHome();">
+                            <ons-icon icon="ion-chevron-left" class="icon-intro-skip"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center">
+                        <img class="centerimg" src="img/tab-2.png"/>&nbsp;<span>Eat Something</span>
+                    </div>
+                    <div class="right">
+                        <ons-toolbar-button ng-click="showMealsRefresh();"><ons-icon icon="fa-refresh" size="24px"></ons-icon></ons-toolbar-button>
+                    </div>
+                </ons-toolbar><br/><br/>
+                <ons-row>
+                    <ons-col>
+                        <div class="one-col">
+                            <div class="top-section">
+                                <ons-list class="list-top" ng-repeat="mealday in appdata.mkeys" ng-if="appdata.mkeys != 0">
+                                    <ons-list-header>{{mealday}}</ons-list-header>
+                                    <ons-list-item modifier="chevron" ng-repeat="meal in appdata.getmeals[mealday]" class="meals" ng-class="{'highlighted': meal.status == 1}" ng-click="meal_detail(meal,mealday)">
+                                      <ons-row>
+                                        <ons-col width="80px" class="plan-left">
+                                          <div class="plan-date">{{gettime(meal.start_time)}} - {{gettime(meal.end_time)}}</div>
+                                        </ons-col>
+                                        <ons-col width="6px" class="plan-center" ng-style="{backgroundColor:a % 3 == 1 ? '#3399ff' : '#ccc'}">
+                                        </ons-col>
+                                        <ons-col class="plan-right">
+                                          <div class="plan-name">{{meal.meal_type}}</div>
+                                          <div class="plan-info">
+                                            <div ng-hide="a % 3 == 0">
+                                              <ons-icon icon="fa-map-marker"></ons-icon> {{meal.description}}
+                                            </div>
+                                          </div>
+                                        </ons-col>
+                                      </ons-row>
+                                    </ons-list-item>
+                                </ons-list>
+                                <ons-list>
+                                  <ons-list-item ng-if="appdata.mkeys == 0"><span class="data_error">No Data Available</span></ons-list-item>
+                                </ons-list>
+                            </div>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="schedule_dosomething.html">
+            <ons-page ng-controller = "ScheduleCalendarController">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-home" size="20px"></ons-icon></ons-toolbar-button>
+                    </div>
+                    <div class="center">
+                        <img class="centerimg" src="img/tab-1.png"/>
+                        <span>Events Calendar</span>
+                    </div>
+                    <div class="right">
+                    </div>
+                </ons-toolbar>
+                <br/><br/>
+                <ons-list ng-repeat="day in appdata.ekeys" ng-if="appdata.ekeys != 0">
+                    <ons-list-header>{{day | date:'EEEE MMMM dd'}}</ons-list-header>
+                    <ons-list ng-repeat="allevents in appdata.getevents[day]">
+                        <ons-list-item  ng-repeat="event in allevents" ng-class="{'highlighted': allmyevents.indexOf(event.event_name+'-'+day+'-'+1)  > -1 }" >
+                            <ons-row>
+                                <ons-col width="80px" class="plan-left">
+                                    <div class="plan-date">{{gettime(event.meetup_time)}}</div>
+                                </ons-col>
+                                <ons-col width="6px" class="plan-center" ng-style="{backgroundColor:a % 3 == 1 ? '#3399ff' : '#ccc'}">
+                                </ons-col>
+                                <ons-col class="plan-right">
+                                    <div class="plan-name">{{event.event_name}}
+                                    </div>
+                                    <div class="plan-info">
+                                        <div ng-hide="a % 3 == 0">
+                                            {{event.description}}
+                                        </div>
+                                    </div>
+                                </ons-col>
+                            </ons-row>
+                        </ons-list-item>
+                    </ons-list>
+                </ons-list>
+                <ons-list>
+                    <ons-list-item ng-if="appdata.ekeys==0"><span class="data_error">No Data Available</span></ons-list-item>
+                </ons-list>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="creditPage.html">
+            <ons-page>
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-home" size="20px"></ons-icon></ons-toolbar-button>
+                    </div>
+                    <div class="center">
+                        <span>Authorize.Net</span>
+                    </div>
+                </ons-toolbar>
+                
+                <ons-tabbar position="top">
+                    <ons-tab page="creditUpdate.html" active="true">
+                        <div class="button-bar" style="width:200px; margin:8px auto 0;">
+                            <div class="button-bar__item">
+                                <input type="radio" name="navi-segment-a">
+                                    <div class="button-bar__button">Edit Card</div>
+                                    </div>
+                        </div>
+                    </ons-tab>
+                    <ons-tab page="creditUnsub.html">
+                        <div class="button-bar" style="width:200px; margin:8px auto 0;">
+                            <div class="button-bar__item">
+                                <input type="radio" name="navi-segment-a">
+                                    <div class="button-bar__button">Unsubscribe</div>
+                                    </div>
+                        </div>
+                    </ons-tab>
+                </ons-tabbar>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="creditUpdate.html">
+            <ons-page>
+                <div class="inside_form_1">
+                    <form name="edit_form" ng-submit="careAccountEdit(form)">
+                        <span><h4>Edit Subscriptions</h4></span>
+                        <input type="tel" name="cardnum" ng-model="form.cardnum" class="text-input--underbar" placeholder="Card Number" ng-maxlength="16" required>
+                            <input type="tel" name="month" ng-model="form.month" class="text-input--underbar" placeholder="Month(ex: 01/Jan)" required>
+                                <input type="tel" name="year" ng-model="form.year" class="text-input--underbar" placeholder="Yr(ex: 2017)" ng-minlength="4" ng-maxlength="4" required>
+                                    <span class="error" ng-show="edit_form.cardnum.$error.maxlength">Credit Card Number should be 16 digits</span>
+                                    <span class="error" ng-show="edit_form.year.$error.maxlength">Year should be 4 digits</span>
+                                    </br>
+                                    </br>
+                                    <button type="submit">Submit</button>
+                                    </form>
+                </div>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="creditUnsub.html">
+            <ons-page>
+                <p id="auth_text">Click Unsubscribe To No longer Use Service.</p>
+                <ons-button id="auth_button" ng-click="careAccountUnsubscribe();">Unsubscribe</ons-button>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="myday.html">
+            <ons-page ng-controller="MydayController">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-if="!isLoggedIn()" ng-click="goHome();">
+                            <ons-icon icon="ion-chevron-left" class="icon-intro-skip"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center">My Day</span></div>
+                    <div class="right">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-home" size="24px"></ons-icon></ons-toolbar-button>
+                    </div>
+                </ons-toolbar>
+                <br/><br/>
+                <ons-tabbar position="top">
+                    <ons-tab page="myactivities.html" active="true">
+                        <div class="button-bar" style="width:200px; margin:8px auto 0;">
+                            <div class="button-bar__item">
+                                <input type="radio" name="navi-segment-a">
+                                <div class="button-bar__button">My Activities</div>
+                            </div>
+                        </div>
+                    </ons-tab>
+                    <ons-tab page="mymeals.html">
+                        <div class="button-bar" style="width:200px; margin:8px auto 0;">
+                            <div class="button-bar__item">
+                                <input type="radio" name="navi-segment-a">
+                                <div class="button-bar__button">My Meals</div>
+                            </div>
+                        </div>
+                    </ons-tab>
+                </ons-tabbar>
+            </ons-page>
+        </ons-template>
+
+        
+        <ons-template id="mydaychild.html">
+            <ons-page ng-controller="MydayChildController">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-home" size="20px"></ons-icon></ons-toolbar-button>
+                    </div>
+                    <div class="center">
+                        <span>My Parents Events</span>
+                    </div>
+                    <div class="right">
+                        <div id="auth_icon">
+                         <ons-toolbar-button ng-click="goCreditPay();"><ons-icon icon="fa-credit-card" size="20px"></ons-icon></ons-toolbar-button>
+                         </div>
+                    </div>
+                </ons-toolbar>
+                <br/><br/>
+                
+                <ons-tabbar position="top">
+                    <ons-tab page="myactivities.html" active="true">
+                        <div class="button-bar" style="width:200px; margin:8px auto 0;">
+                            <div class="button-bar__item">
+                                <input type="radio" name="navi-segment-a">
+                                    <div class="button-bar__button">My Parent Activites</div>
+                                    </div>
+                        </div>
+                    </ons-tab>
+                    <ons-tab page="mymeals.html">
+                        <div class="button-bar" style="width:200px; margin:8px auto 0;">
+                            <div class="button-bar__item">
+                                <input type="radio" name="navi-segment-a">
+                                    <div class="button-bar__button">My parents meals</div>
+                                    </div>
+                        </div>
+                    </ons-tab>
+                </ons-tabbar>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="myactivities.html">
+            <ons-page>
+                <ons-row>
+                    <ons-col>
+                        <div class="one-col">
+                            <div class="top-section">
+                                <ons-list class="list-top" ng-repeat="eventskeys in appdata.userekeys" ng-if="appdata.userekeys != 0">
+                                    <ons-list-header>{{eventskeys | date:'EEEE MMMM dd'}}</ons-list-header>
+                                    <ons-list ng-repeat="myeeventdays in appdata.usereventlist[eventskeys]" >
+                                        <ons-list ng-repeat="myeeventday in myeeventdays" >
+                                            <ons-list-item>
+                                                <ons-row>
+                                                    <ons-col width="80px" class="plan-left">
+                                                        <div class="plan-date">{{gettime(myeeventday.event_time)}}</div>
+                                                    </ons-col>
+                                                    <ons-col width="6px" class="plan-center" ng-style="{backgroundColor:a % 3 == 1 ? '#3399ff' : '#ccc'}"></ons-col>
+                                                    <ons-col class="plan-right">
+                                                        <div class="plan-name">{{myeeventday.name}}
+                                                        </div>
+                                                        <div class="plan-info">
+                                                            <div ng-hide="a % 3 == 0">
+                                                                <ons-icon icon="fa-map-marker"></ons-icon> &nbsp;{{myeeventday.location}}
+                                                            </div>
+                                                        </div>
+                                                    </ons-col>
+                                                </ons-row>
+                                            </ons-list-item>
+                                        </ons-list>
+                                    </ons-list>
+                                    <ons-list class="no_activity" ng-if="appdata.userekeys == 0">
+                                        <ons-list-item>{{myday_msg}}</ons-list-item>
+                                    </ons-list>
+                                </ons-list>
+                            </div>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="mymeals.html">
+            <ons-page>
+                <ons-row>
+                    <ons-col>
+                        <div class="one-col">
+                            <div class="top-section">
+                                <div class="events-list-view" ng-if="appdata.mydayekeys != 0">
+                                    <div class="mymeals">
+                                        <ons-list class="list-top" ng-repeat="mealkeys in appdata.usermkeys" ng-if="usermkeys != 0">
+                                            <ons-list-header class="sub-head">{{getday(mealkeys)}} </ons-list-header>
+                                            <ons-list class="meals" ng-repeat="mymealdays in appdata.usermeallist[mealkeys]">
+                                                <ons-list-item>
+                                                    <ons-row>
+                                                        <ons-col width="80px" class="plan-left">
+                                                            <div class="plan-date">{{gettime(mymealdays.event_time)}}</div>
+                                                        </ons-col>
+                                                        <ons-col width="6px" class="plan-center" ng-style="{backgroundColor:a % 3 == 1 ? '#3399ff' : '#ccc'}">
+                                                        </ons-col>
+                                                        <ons-col class="plan-right">
+                                                            <div class="plan-name">{{mymealdays.name}}
+                                                            </div>
+                                                            <div class="plan-info">
+                                                                <div ng-hide="a % 3 == 0">
+                                                                    <ons-icon icon="fa-map-marker"></ons-icon> &nbsp;{{mymealdays.location}}
+                                                                </div>
+                                                            </div>
+                                                        </ons-col>
+                                                    </ons-row>
+                                                </ons-list-item>
+                                            </ons-list>
+                                        </ons-list>
+                                        <ons-list class="no_activity">
+                                            <ons-list-item ng-if="appdata.usermkeys == 0">No Meal</ons-list-item>
+                                        </ons-list>
+                                    </div>
+                                    
+<!--                                     <button class="tab-bar__button tab-bar-inner  " ng-click="childdata()" ng-switch="loader.getCurrentState()" >
+                                        
+                                        <div class="button-bar ng-scope" style="width:200px; margin:8px auto 0;">
+                                            <div class="button-bar__item">
+                                                <input type="radio" name="navi-segment-a">
+                                                <div class="button-bar__button">Refresh Meal</div>
+                                            </div>
+                                        </div>
+                                    </button> -->
+                                </div>
+                                <ons-list class="no_activity" ng-if="appdata.mydayekeys == 0">
+                                    <ons-list-item>{{myday_msg}}</ons-list-item>
+                                </ons-list>
+                            </div>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="mydaydetail.html">
+            <ons-page ng-controller="MydayController">
+                <ons-toolbar>
+                    <div class="left">
+                    </div>
+                    <div class="center">My Activities</div>
+                    <div class="right closeevent">
+                        <span ng-click="goBack();"><ons-icon icon="ion-close" size="24px"></ons-icon></span>
+                    </div>
+                </ons-toolbar><br/><br/>
+                
+                <ons-row>
+                    <ons-col>
+                        <div class="one-col">
+                            <div class="top-section">
+                                <div class="title" ng-if="myday_detail.status == 'success'">{{myday_detail.eventdate | date:'EEEE MMMM dd'}}</div>
+                                <ons-list class="meals" ng-if="myday_detail.status == 'success'" ng-repeat="myday in detail_datedinfo">
+                                    <ons-list-item>{{myday.name}}&nbsp;&nbsp;{{gettime(myday.event_time)}}</ons-list-item>
+                                    </div>
+                            </ons-list>
+                            <span ng-if="myday_detail.status == 'Error' || myday_detail == 'null'"><ons-list-item>No Event</ons-list-item></span>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="eventdetail.html">
+            <ons-page ng-controller="EventController">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-if="!isLoggedIn()" ng-click="goBack();">
+                            <ons-icon icon="ion-chevron-left" class="icon-intro-skip"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center"><span>{{eventtitle}}</span></div>
+                    <div class="right">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-home" size="24px"></ons-icon></ons-toolbar-button>
+                    </div>
+                </ons-toolbar><br/><br/>
+                
+                <ons-row>
+                    <ons-col>
+                        <div class="one-col">
+                            <div class="detailtop-section">
+                                <span class="top-title"><b>Come Join us</b></span>
+                                <span class="middle-text">{{details.description}}</span>
+                                <span class="bottom-text">Location : {{details.location_name}}</span>
+                            </div>
+                            <div class="detailbottom-section">
+                                <button class="button button--outline first-button" ng-click="joined_eventUser(details,singledate)" ng-hide="details.thirdparty_access == 1">See who is going</button>
+                                <button class="button button--large--cta sec-button" ng-click="join_eventdate(details,singledate)" ng-disabled="chk_eventusers == true" ng-show="join_status == false">Yes! I will be there!</button>
+                            </div>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        
+        <ons-template id="joineventusers.html">
+            <ons-page ng-controller="JoinEventUsersController">
+                <ons-toolbar>
+                    
+                    <div class="left">
+                        <ons-toolbar-button ng-if="!isLoggedIn()" ng-click="goBack();">
+                            <ons-icon icon="ion-chevron-left" class="icon-intro-skip"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center"><span>See Who is going</span></div>
+                    <div class="right">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-home" size="24px"></ons-icon></ons-toolbar-button>
+                    </div>
+                </ons-toolbar><br/><br/>
+                
+                <ons-row>
+                    <ons-col>
+                        <div class="one-col">
+                            <div class="top-section whitebg-list-center">
+                                <ons-list>
+                                    <ons-list-item ng-if="joinuserdetails[0].status !='Error'" ng-repeat="joineduser in joinedusers">
+                                        {{joineduser.first_name}} {{joineduser.last_name}}</ons-list-item>
+                                    <ons-list-item ng-if="joinuserdetails[0].status =='Error'">{{message}}</ons-list-item>
+                                </ons-list>
+                            </div>
+                            <div class="detailbottom-section">
+                            </div>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="mealdetail.html">
+            <ons-page ng-controller="MealController">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-if="!isLoggedIn()" ng-click="goBack();">
+                            <ons-icon icon="ion-chevron-left" class="icon-intro-skip"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center"><span class="meals">{{meal_detail.name}}</span></div>
+                    <div class="right">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-home" size="24px"></ons-icon></ons-toolbar-button>
+                    </div>
+                </ons-toolbar><br/><br/>
+                <ons-row>
+                    <ons-col>
+                        <div class="one-col">
+                            <div class="detailtop-section">
+                                <span class="top-title"><b>Come Join us</b></span>
+                                <span class="middle-text">{{meal_detail.description}}</span>
+                                <span class="bottom-text"> Location: {{meal_detail.location_name}} </span>
+                            </div>
+                            <div class="detailbottom-section">
+                                <button class="button button--outline first-button" ng-click="joined_mealUser(meal_detail)">See who is going</button>
+                                <button class="button button--large--cta sec-button" ng-click="join_mealdate(meal_detail.id,mealcurrentday)" ng-show="mealjoin_status == false">Yes! I will be there!</button>
+                                <button class="button button--large--cta sec-button" ng-click="delete_mealdate(meal_detail,mealcurrentday)" ng-show="mealjoin_status == true">Will Not Attend</button>
+                            </div>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="recurringevent.html">
+            <ons-page ng-controller="recurringController">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-if="!isLoggedIn()" ng-click="goBack();">
+                            <ons-icon icon="ion-chevron-left" class="icon-intro-skip"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center"><span>Yes! I will be there!</span></div>
+                    <div class="right">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-home" size="24px"></ons-icon></ons-toolbar-button>
+                    </div>
+                </ons-toolbar><br/><br/>
+                
+                <ons-row>
+                    <ons-col>
+                        <div class="one-col">
+                            <div class="top-section whitebg-list">
+                                <ons-list>
+                                    <span class="form-checkbox" ng-repeat="pusharr in pusharray">
+                                        <label class="radio-button radio-button--list-item">
+                                            <input type="radio" name="radioval" ng-model="selectedevents.radioval" ng-value="pusharr.value" ng-checked="selectevents.indexOf(pusharr.value) > -1">
+                                                <div class="radio-button__checkmark radio-button--list-item__checkmark bordered"></div> 
+                                                {{ pusharr.day }}
+                                                </label>
+                                    </span><br><br>
+                                    <button class="button first-button" ng-click="save_event(selectedevents.radioval,details)">Done</button>
+                                </ons-list>
+                            </div>               
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <ons-template id="recurringmeal.html">
+            <ons-page ng-controller="recurringmealController">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-if="!isLoggedIn()" ng-click="goBack();">
+                            <ons-icon icon="ion-chevron-left" class="icon-intro-skip"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center"><span>Yes! I will be there!</span></div>
+                    <div class="right">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-home" size="24px"></ons-icon></ons-toolbar-button>
+                    </div>
+                </ons-toolbar><br/><br/>
+                
+                <ons-row>
+                    <ons-col>
+                        <div class="one-col">
+                            <div class="top-section whitebg-list-center">
+                                <ons-list>
+                                    <ons-row>
+                                        <ons-col>
+                                            <div class="one-col">
+                                                <div class="top-section">
+                                                    <ons-list ng-repeat="mealt in mealtime">
+                                                        <ons-list-item ng-click="save_meal(mealt.time,meal_detail)" ng-class="{'highlighted': selectmeals.indexOf(mealt.time) > -1}" ng-if="$index + 1 < mealtime.length">
+                                                            {{gettime(mealt.time)}} - {{gettime(mealtime[$index+1]['time'])}}</ons-list-item>
+                                                    </ons-list>
+                                                </div>                 
+                                            </div>
+                                        </ons-col>
+                                    </ons-row>
+                                    
+                                </ons-list>
+                            </div>                 
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>    
+        
+        
+        <ons-template id="joined.html">
+            <ons-page ng-controller="JoinedController">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-if="!isLoggedIn()" ng-click="goBack();">
+                            <ons-icon icon="ion-chevron-left" class="icon-intro-skip"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center"><span>Joined</span></div>
+                    <div class="right">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-home" size="24px"></ons-icon></ons-toolbar-button>
+                    </div>
+                </ons-toolbar><br/><br/>
+                
+                <ons-row>
+                    <ons-col>
+                        <div class="one-col">
+                            <div class="joined-section">
+                                <span class="join-middle-text"> {{message}} </span>
+                            </div>                 
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+        
+        <!-- Meal users -->
+        <ons-template id="joinmealusers.html">
+            <ons-page ng-controller="JoinMealUsersController">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-if="!isLoggedIn()" ng-click="goBack();">
+                            <ons-icon icon="ion-chevron-left" class="icon-intro-skip"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center"><span>See Who is going</span></div>
+                    <div class="right">
+                        <ons-toolbar-button ng-click="goHome();"><ons-icon icon="fa-home" size="24px"></ons-icon></ons-toolbar-button>
+                    </div>
+                </ons-toolbar><br/><br/>
+                
+                <ons-row>
+                    <ons-col>
+                        <div class="one-col">
+                            <div class="top-section whitebg-list-center">
+                                <ons-list>
+                                    <ons-list-item ng-if="joinmealusers[0].status !='Error'" ng-repeat="joined_mealuser in joined_mealusers">
+                                        {{joined_mealuser.first_name}} {{joined_mealuser.last_name}}</ons-list-item>
+                                    <ons-list-item ng-if="joinmealusers[0].status =='Error'">{{message}}</ons-list-item>
+                                </ons-list>
+                            </div>
+                            <div class="detailbottom-section">
+                            </div>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-page>
+        </ons-template>
+    </body>
+</html>

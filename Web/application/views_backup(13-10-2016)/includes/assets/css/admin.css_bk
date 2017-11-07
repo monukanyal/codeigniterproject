@@ -1,0 +1,98 @@
+.text-center {
+    text-align: center;
+}
+.right-border {
+    border-right: 1px dotted #ff0000;
+}
+.left-border {
+    border-left: 1px dotted #ff0000;
+}
+ul.inline-checkbox {
+    list-style: none;
+    margin: 0;
+}
+.profile_view img{
+    width: 100px;
+    height: 100px;
+}
+.flash.error{
+    background-color: #E20010;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 5px;
+}
+.flash.success {
+    background-color: #5BB237;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+#Show .show-detail {
+	background-color: rgba(0, 0, 0, 0.09);
+    border-radius: 3px;
+    display: inline-block;
+    padding: 20px;
+    border-bottom: 5px solid rgba(0, 0, 0, 0.09);
+    width: 100%;
+}
+#Show .show-detail h3 {
+	color: #666;
+    font-weight: 700;
+    margin: 0 0 12px;
+    line-height: 1;
+    text-align: center;
+}
+#Show .show-detail span.type-info {
+    border-bottom: 1px dashed #fff;
+    float: left;
+    margin: 10px 0 0;
+    padding: 0 0 10px;
+    color: #666;
+    width: 100%;
+    font-weight: 700;
+}
+#Show .show-detail span.user-infor {
+    border-bottom: 1px dashed #fff;
+    float: left;
+    margin: 10px 0 0;
+    padding: 0 0 10px;
+    color: #666;
+    width: 100%;
+
+}
+.fc-activity-detail:before, .fc-activity-detail:after {
+    position: absolute;
+    left: -18px;
+    top: 65px;
+    content: "";
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 18px #ddd solid;
+    width: 0;
+    height: 0;
+}
+.fc-activity-detail:after {
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 17px solid #fff;
+    top: 67px;
+    left: -17PX;
+}
+.fc-activity-detail {
+    border: 1px #ddd solid;
+    max-width: 210px;
+    padding: 10px;
+    position: relative;
+    margin: 20px 0;
+}
+.fc-activity-title {
+    background-color: rgba(0,0,0,0.08);
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    padding: 0 10px;
+    color: #333;
+    font-weight: 700;
+}
